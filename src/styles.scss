@@ -34,6 +34,43 @@ body {
   // Reset the user agent margin.
   margin: 0;
 }
+/* ── Design tokens ──────────────────────────────────── */
+:root {
+  // Brand
+  --color-primary:        #048044;  // dark green — sidenav, buttons
+  --color-primary-light:  #1a8a6e;  // medium green — links, accents, chevrons
+  --color-accent:         #c8a84b;  // gold — stars, awaiting borders, highlights
+
+  // Text
+  --color-text:           #1a1a1a;  // headings
+  --color-text-body:      #333;     // body copy
+  --color-text-muted:     #555;     // secondary text
+  --color-text-subtle:    #888;     // table headers, placeholders
+  --color-text-disabled:  #aaa;     // disabled / very muted
+
+  // Borders
+  --color-border:         #e8e8e8;  // card / table borders
+  --color-border-mid:     #ddd;     // input borders
+  --color-border-light:   #ccc;     // tag / badge borders
+  --color-border-faint:   #f0f0f0;  // table row dividers
+
+  // Backgrounds
+  --color-bg-page:        #f5f5f5;  // layout content area
+  --color-bg-card:        #fff;     // cards, panels
+  --color-bg-subtle:      #f0f0f0;  // tabs pill, in-progress badge
+  --color-bg-hover:       #fafafa;  // table row hover
+
+  // Status — Awaiting Info
+  --color-awaiting-bg:    #fff8e1;
+  --color-awaiting-border:#c8a84b;
+  --color-awaiting-text:  #8a6a00;
+
+  // Status — Closed
+  --color-closed-bg:      #e8f5e9;
+  --color-closed-border:  #66bb6a;
+  --color-closed-text:    #2e7d32;
+}
+
 /* You can add global styles to this file, and also import other style files */
 
 html, body {

@@ -93,7 +93,7 @@
     box-sizing: border-box;
     transition: border-color 0.2s;
 
-    &:focus { border-color: #1a3c34; }
+    &:focus { border-color: var(--color-primary); }
     &::placeholder { color: #bbb; }
   }
 
@@ -115,7 +115,7 @@
   &__submit {
     width: 100%;
     padding: 12px;
-    background-color: #1a3c34;
+    background-color: var(--color-primary);
     color: #fff;
     border: none;
     border-radius: 8px;
