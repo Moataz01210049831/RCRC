@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 interface StatCard {
   label: string;
@@ -10,7 +11,7 @@ interface StatCard {
 
 @Component({
   selector: 'app-stats-header',
-  imports: [NgClass],
+  imports: [NgClass, RouterLink],
   templateUrl: './stats-header.html',
   styleUrl: './stats-header.scss',
 })

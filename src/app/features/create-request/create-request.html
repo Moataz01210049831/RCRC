@@ -1,0 +1,116 @@
+<div class="cr">
+
+  <!-- Page Header -->
+  <div class="cr__header">
+    <a class="cr__back" routerLink="/requests">
+      <span class="material-icons">chevron_left</span> Back
+    </a>
+    <h1 class="cr__title">Create new request</h1>
+  </div>
+
+  <!-- Body: Steps + Content -->
+  <div class="cr__body">
+
+    <!-- Steps Sidebar -->
+    <aside class="cr__steps">
+      <p class="cr__steps-label">Steps</p>
+      @for (step of steps; track step.number) {
+        <div class="cr__step" [class.cr__step--active]="currentStep() === step.number" [class.cr__step--done]="currentStep() > step.number">
+          <span class="cr__step-number">{{ currentStep() > step.number ? '✓' : step.number }}</span>
+          <span class="cr__step-text">{{ step.label }}</span>
+        </div>
+      }
+    </aside>
+
+    <!-- Step Content -->
+    <div class="cr__content">
+
+      <!-- Step 1: Customer Details -->
+      @if (currentStep() === 1) {
+        <h2 class="cr__section-title">Customer details</h2>
+        <p class="cr__section-sub">Would you like to use your saved personal details, or enter new details?</p>
+
+        <!-- Saved Profile Option -->
+        <label class="cr__saved-card" [class.cr__saved-card--selected]="useSaved()">
+          <input type="radio" name="profileChoice" [value]="true" [(ngModel)]="useSaved" class="cr__radio" />
+          <div class="cr__saved-info">
+            <p class="cr__saved-name">Alanood Abdullah</p>
+            <p class="cr__saved-detail">Email&#64;email.com</p>
+            <p class="cr__saved-detail">+966 50 123 4567</p>
+            <p class="cr__saved-detail">NIC: 1234567890</p>
+          </div>
+        </label>
+
+        <p class="cr__or">Or</p>
+
+        <!-- Manual Entry -->
+        <div class="cr__field">
+          <label class="cr__label">Customer Name</label>
+          <input class="cr__input" type="text" placeholder="Enter customer name" [(ngModel)]="customerName" name="customerName" />
+        </div>
+
+        <div class="cr__row">
+          <div class="cr__field">
+            <label class="cr__label">Email</label>
+            <input class="cr__input" type="email" placeholder="customer@example.com" [(ngModel)]="email" name="email" />
+          </div>
+          <div class="cr__field cr__field--phone">
+            <label class="cr__label">Phone</label>
+            <div class="cr__phone-group">
+              <span class="cr__phone-prefix">+966</span>
+              <input class="cr__input cr__input--phone" type="tel" placeholder="50 123 4567" [(ngModel)]="phone" name="phone" />
+            </div>
+          </div>
+        </div>
+
+        <div class="cr__row">
+          <div class="cr__field">
+            <label class="cr__label">ID Type</label>
+            <select class="cr__input cr__select" [(ngModel)]="idType" name="idType">
+              <option value="">Select</option>
+              <option value="national">National ID</option>
+              <option value="passport">Passport</option>
+              <option value="iqama">Iqama</option>
+            </select>
+          </div>
+          <div class="cr__field">
+            <label class="cr__label">ID number</label>
+            <input class="cr__input" type="text" placeholder="1234567890" [(ngModel)]="idNumber" name="idNumber" />
+          </div>
+        </div>
+      }
+
+      <!-- Step 2 placeholder -->
+      @if (currentStep() === 2) {
+        <h2 class="cr__section-title">Request details</h2>
+        <p class="cr__section-sub">Fill in the request information.</p>
+      }
+
+      <!-- Step 3 placeholder -->
+      @if (currentStep() === 3) {
+        <h2 class="cr__section-title">Documents</h2>
+        <p class="cr__section-sub">Upload the required documents.</p>
+      }
+
+      <!-- Step 4 placeholder -->
+      @if (currentStep() === 4) {
+        <h2 class="cr__section-title">Summary</h2>
+        <p class="cr__section-sub">Review your request before submitting.</p>
+      }
+
+    </div>
+  </div>
+
+  <!-- Footer Actions -->
+  <div class="cr__footer">
+    @if (currentStep() > 1) {
+      <button class="cr__btn cr__btn--secondary" (click)="back()">Back</button>
+    }
+    @if (currentStep() === 4) {
+      <button class="cr__btn cr__btn--primary" (click)="next()">Submit</button>
+    } @else {
+      <button class="cr__btn cr__btn--primary" (click)="next()">Next</button>
+    }
+  </div>
+
+</div>

@@ -32,6 +32,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/faqs/faqs').then((m) => m.Faqs),
       },
+      {
+        path: 'create-request',
+        loadComponent: () =>
+          import('./features/create-request/create-request').then((m) => m.CreateRequest),
+      },
     ],
   },
   {
