@@ -3,6 +3,10 @@ import { Layout } from './shared/layout/layout';
 
 export const routes: Routes = [
   {
+    path: 'login',
+    loadComponent: () => import('./features/login/login').then((m) => m.Login),
+  },
+  {
     path: '',
     component: Layout,
     children: [
@@ -27,5 +31,9 @@ export const routes: Routes = [
           import('./features/faqs/faqs').then((m) => m.Faqs),
       },
     ],
+  },
+  {
+    path: '**',
+    redirectTo: 'login',
   },
 ];
