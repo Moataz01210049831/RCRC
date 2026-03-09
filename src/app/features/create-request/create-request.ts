@@ -1,6 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+export interface UploadedFile {
+  name: string;
+  type: string;
+  size: string;
+  file: File;
+}
 
 export interface Step {
   number: number;
@@ -63,6 +69,48 @@ export class CreateRequest {
   service = '';
   requestTitle = '';
   description = '';
+
+  // Documents
+  uploadModalOpen = signal(false);
+  uploadedFiles = signal<UploadedFile[]>([]);
+  dragOver = signal(false);
+
+  openUploadModal() { this.uploadModalOpen.set(true); }
+  closeUploadModal() { this.uploadModalOpen.set(false); }
+
+  onDragOver(e: DragEvent) { e.preventDefault(); this.dragOver.set(true); }
+  onDragLeave() { this.dragOver.set(false); }
+  onDrop(e: DragEvent) {
+    e.preventDefault();
+    this.dragOver.set(false);
+    const files = e.dataTransfer?.files;
+    if (files) this.addFiles(files);
+  }
+
+  onFileSelected(e: Event) {
+    const input = e.target as HTMLInputElement;
+    if (input.files) this.addFiles(input.files);
+    input.value = '';
+  }
+
+  private addFiles(files: FileList) {
+    const added: UploadedFile[] = [];
+    for (let i = 0; i < files.length; i++) {
+      const f = files[i];
+      added.push({
+        name: f.name,
+        type: f.type.split('/')[1]?.toUpperCase() ?? 'FILE',
+        size: (f.size / 1024).toFixed(2) + 'KB',
+        file: f,
+      });
+    }
+    this.uploadedFiles.update(prev => [...prev, ...added]);
+    this.closeUploadModal();
+  }
+
+  removeFile(index: number) {
+    this.uploadedFiles.update(prev => prev.filter((_, i) => i !== index));
+  }
 
   next() {
     if (this.currentStep() < this.steps.length) {

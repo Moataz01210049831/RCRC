@@ -138,10 +138,59 @@
         </div>
       }
 
-      <!-- Step 3 placeholder -->
+      <!-- Step 3: Documents -->
       @if (currentStep() === 3) {
         <h2 class="cr__section-title">Documents</h2>
-        <p class="cr__section-sub">Upload the required documents.</p>
+        <p class="cr__section-sub">Drag or upload the attachments here</p>
+
+        <!-- Upload trigger row -->
+        <div class="cr__upload-row" (click)="openUploadModal()">
+          <span class="cr__upload-placeholder">Upload</span>
+          <button class="cr__upload-add" type="button" >
+            <span class="material-icons">add</span>
+          </button>
+        </div>
+        <p class="cr__upload-hint">PDF, JPEG and PNG up to 5MB</p>
+
+        <!-- Uploaded files list -->
+        @for (file of uploadedFiles(); track $index) {
+          <div class="cr__file-row">
+            <span class="material-icons cr__file-icon">description</span>
+            <span class="cr__file-name">{{ file.name }}</span>
+            <button class="cr__file-remove" type="button" (click)="removeFile($index)">
+              <span class="material-icons">remove_circle_outline</span>
+            </button>
+          </div>
+          <p class="cr__file-meta">{{ file.type }} · {{ file.size }}</p>
+        }
+      }
+
+      <!-- Upload Modal -->
+      @if (uploadModalOpen()) {
+        <div class="cr__modal-backdrop" (click)="closeUploadModal()">
+          <div class="cr__modal" (click)="$event.stopPropagation()">
+            <div class="cr__modal-header">
+              <span class="cr__modal-title">Upload Document</span>
+              <button class="cr__modal-close" type="button" (click)="closeUploadModal()">
+                <span class="material-icons">close</span>
+              </button>
+            </div>
+            <label
+              class="cr__dropzone"
+              [class.cr__dropzone--over]="dragOver()"
+              (dragover)="onDragOver($event)"
+              (dragleave)="onDragLeave()"
+              (drop)="onDrop($event)"
+            >
+              <input type="file" multiple accept=".pdf,.jpg,.jpeg,.png" class="cr__file-input" (change)="onFileSelected($event)" />
+              <span class="material-icons cr__dropzone-icon">cloud_upload</span>
+              <p class="cr__dropzone-text">
+                Drag and drop or <span class="cr__dropzone-link">upload from computer</span>
+              </p>
+              <p class="cr__dropzone-hint">PDF, JPEG and PNG up to 5MB</p>
+            </label>
+          </div>
+        </div>
       }
 
       <!-- Step 4 placeholder -->
