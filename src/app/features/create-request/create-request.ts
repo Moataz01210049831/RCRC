@@ -32,6 +32,14 @@ export class CreateRequest {
   idType = '';
   idNumber = '';
 
+  // Request details fields
+  category = 'Suggestions';
+  sector = '';
+  department = '';
+  service = '';
+  requestTitle = '';
+  description = '';
+
   next() {
     if (this.currentStep() < this.steps.length) {
       this.currentStep.set(this.currentStep() + 1);

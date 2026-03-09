@@ -80,10 +80,62 @@
         </div>
       }
 
-      <!-- Step 2 placeholder -->
+      <!-- Step 2: Request Details -->
       @if (currentStep() === 2) {
-        <h2 class="cr__section-title">Request details</h2>
-        <p class="cr__section-sub">Fill in the request information.</p>
+        <h2 class="cr__section-title">Request Details</h2>
+
+        <div class="cr__row">
+          <div class="cr__field">
+            <label class="cr__label">Category</label>
+            <select class="cr__input cr__select" [(ngModel)]="category" name="category">
+              <option value="Suggestions">Suggestions</option>
+              <option value="Complaints">Complaints</option>
+              <option value="Inquiries">Inquiries</option>
+              <option value="Training & Employment">Training &amp; Employment</option>
+            </select>
+          </div>
+          <div class="cr__field">
+            <label class="cr__label">Sector</label>
+            <select class="cr__input cr__select" [(ngModel)]="sector" name="sector">
+              <option value="">Select</option>
+              <option value="Public">Public</option>
+              <option value="Private">Private</option>
+              <option value="Government">Government</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="cr__row">
+          <div class="cr__field">
+            <label class="cr__label">Department</label>
+            <select class="cr__input cr__select" [(ngModel)]="department" name="department">
+              <option value="">Select</option>
+              <option value="IT">IT</option>
+              <option value="HR">HR</option>
+              <option value="Finance">Finance</option>
+              <option value="Operations">Operations</option>
+            </select>
+          </div>
+          <div class="cr__field">
+            <label class="cr__label">Service</label>
+            <select class="cr__input cr__select" [(ngModel)]="service" name="service">
+              <option value="">Select</option>
+              <option value="Support">Support</option>
+              <option value="Maintenance">Maintenance</option>
+              <option value="Consultation">Consultation</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="cr__field">
+          <label class="cr__label">Request Title</label>
+          <input class="cr__input" type="text" placeholder="Hint" [(ngModel)]="requestTitle" name="requestTitle" />
+        </div>
+
+        <div class="cr__field">
+          <label class="cr__label">Description</label>
+          <textarea class="cr__input cr__textarea" placeholder="A description for the request.." [(ngModel)]="description" name="description"></textarea>
+        </div>
       }
 
       <!-- Step 3 placeholder -->
