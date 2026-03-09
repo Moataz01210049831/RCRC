@@ -32,7 +32,7 @@
 
         <!-- Saved Profile Option -->
         <label class="cr__saved-card" [class.cr__saved-card--selected]="useSaved()">
-          <input type="radio" name="profileChoice" [value]="true" [(ngModel)]="useSaved" class="cr__radio" />
+          <input type="radio" name="profileChoice" [value]="true" [(ngModel)]="useSaved" class="cr__radio" (ngModelChange)="onUseSavedChange()" />
           <div class="cr__saved-info">
             <p class="cr__saved-name">Alanood Abdullah</p>
             <p class="cr__saved-detail">Email&#64;email.com</p>

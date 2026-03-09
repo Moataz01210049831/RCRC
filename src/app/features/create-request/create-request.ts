@@ -23,7 +23,15 @@ export class CreateRequest {
     { number: 4, label: 'Summary' },
   ];
 
-  useSaved = signal<boolean | null>(true);
+  useSaved = signal<boolean | null>(false);
+
+  private readonly savedProfile = {
+    customerName: 'Alanood Abdullah',
+    email: 'Email@email.com',
+    phone: '50 123 4567',
+    idType: 'national',
+    idNumber: '1234567890',
+  };
 
   // Customer form fields
   customerName = '';
@@ -31,6 +39,22 @@ export class CreateRequest {
   phone = '';
   idType = '';
   idNumber = '';
+
+  onUseSavedChange() {
+    if (this.useSaved()) {
+      this.customerName = this.savedProfile.customerName;
+      this.email        = this.savedProfile.email;
+      this.phone        = this.savedProfile.phone;
+      this.idType       = this.savedProfile.idType;
+      this.idNumber     = this.savedProfile.idNumber;
+    } else {
+      this.customerName = '';
+      this.email        = '';
+      this.phone        = '';
+      this.idType       = '';
+      this.idNumber     = '';
+    }
+  }
 
   // Request details fields
   category = 'Suggestions';
