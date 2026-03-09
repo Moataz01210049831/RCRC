@@ -1,5 +1,4 @@
 import { Component, signal } from '@angular/core';
-import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DataTable, TableColumn, TableRow } from '../../shared/data-table/data-table';
 
@@ -7,7 +6,7 @@ type Tab = 'Main table' | 'Active Requests' | 'Closed';
 
 @Component({
   selector: 'app-requests',
-  imports: [NgClass, FormsModule, DataTable],
+  imports: [FormsModule, DataTable],
   templateUrl: './requests.html',
   styleUrl: './requests.scss',
 })
