@@ -11,9 +11,41 @@
   <div class="sidenav__profile">
     <img src="images/avatar.png" alt="User Avatar" class="sidenav__avatar" />
     @if (isOpen()) {
-      <h3 class="sidenav__username">Abdulaziz Al-Abdullah</h3>
-      <p class="sidenav__role">Technology Solutions Developer</p>
-      <p class="sidenav__job-number">Job number 12233443 #</p>
+      <div class="sidenav__username-row">
+        <h3 class="sidenav__username">Abdulaziz Al-Abdullah</h3>
+        <button class="sidenav__contact-toggle" (click)="contactExpanded.set(!contactExpanded())" [title]="contactExpanded() ? 'Hide contact' : 'Show contact'">
+          <span class="material-icons">{{ contactExpanded() ? 'expand_less' : 'expand_more' }}</span>
+        </button>
+      </div>
+      @if (contactExpanded()) {
+      <div class="sidenav__contact">
+        <a class="sidenav__contact-item" href="tel:0114234567">
+          <span class="material-icons sidenav__contact-icon">phone</span>
+          <span class="sidenav__contact-text">0114234567</span>
+        </a>
+        <a class="sidenav__contact-item" href="tel:0550000005">
+          <span class="material-icons sidenav__contact-icon">smartphone</span>
+          <span class="sidenav__contact-text">0550000005</span>
+        </a>
+        <a class="sidenav__contact-item" href="mailto:email@rcrc.gov.sa">
+          <span class="material-icons sidenav__contact-icon">mail_outline</span>
+          <span class="sidenav__contact-text">email@rcrc.gov.sa</span>
+        </a>
+      </div>
+      }
+    }
+    @if (!isOpen()) {
+      <div class="sidenav__contact sidenav__contact--collapsed">
+        <a class="sidenav__contact-item" href="tel:0114234567" title="0114234567">
+          <span class="material-icons sidenav__contact-icon">phone</span>
+        </a>
+        <a class="sidenav__contact-item" href="tel:0550000005" title="0550000005">
+          <span class="material-icons sidenav__contact-icon">smartphone</span>
+        </a>
+        <a class="sidenav__contact-item" href="mailto:email@rcrc.gov.sa" title="email@rcrc.gov.sa">
+          <span class="material-icons sidenav__contact-icon">mail_outline</span>
+        </a>
+      </div>
     }
   </div>
 

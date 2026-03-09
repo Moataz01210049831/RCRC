@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -10,6 +10,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class Sidenav {
   isOpen = input<boolean>(true);
   toggleNav = output<void>();
+  contactExpanded = signal(true);
 
   navItems = [
     { label: 'Dashboard', icon: 'dashboard', route: '/dashboard' },

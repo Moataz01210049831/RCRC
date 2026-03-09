@@ -84,20 +84,69 @@ $nav-collapsed-width: 64px;
     margin-bottom: 8px;
   }
 
+  &__username-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 4px;
+  }
+
   &__username {
     font-size: 13px;
     font-weight: 600;
     color: #1a1a1a;
-    margin: 0 0 3px;
+    margin: 0;
     white-space: nowrap;
   }
 
-  &__role,
-  &__job-number {
+  &__contact-toggle {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: var(--color-text-subtle);
+
+    .material-icons { font-size: 18px; }
+
+    &:hover { color: var(--color-primary); }
+  }
+
+  &__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+    width: 100%;
+
+    &--collapsed {
+      align-items: center;
+      margin-top: 8px;
+    }
+  }
+
+  &__contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--color-primary-light);
     font-size: 11px;
-    color: #666;
-    margin: 0 0 2px;
     white-space: nowrap;
+
+    &:hover .sidenav__contact-text { text-decoration: underline; }
+  }
+
+  &__contact-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+    color: var(--color-text-subtle);
+  }
+
+  &__contact-text {
+    font-size: 11px;
   }
 
   &__nav {
