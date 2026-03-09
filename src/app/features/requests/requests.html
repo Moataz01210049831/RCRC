@@ -41,6 +41,12 @@
         <span class="requests__group-label requests__group-label--active">Active Requests</span>
       </button>
 
+      @if (!activeExpanded()) {
+        <div class="requests__closed-summary">
+          <span class="requests__closed-badge">{{ activeRequests.length }}</span> Request
+        </div>
+      }
+
       @if (activeExpanded()) {
         <app-data-table [columns]="columns" [data]="activeRequests" />
       }
