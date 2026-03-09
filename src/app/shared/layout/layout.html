@@ -1,0 +1,6 @@
+<div class="layout" [class.layout--collapsed]="!isNavOpen()">
+  <app-sidenav [isOpen]="isNavOpen()" (toggleNav)="toggleNav()" />
+  <main class="layout__content">
+    <router-outlet />
+  </main>
+</div>

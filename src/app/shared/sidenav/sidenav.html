@@ -1,0 +1,45 @@
+<aside class="sidenav" [class.sidenav--collapsed]="!isOpen()">
+
+  <!-- Toggle Button -->
+  <button class="sidenav__toggle" (click)="toggleNav.emit()" [title]="isOpen() ? 'Close menu' : 'Open menu'">
+    <span class="material-icons">{{ isOpen() ? 'menu_open' : 'menu' }}</span>
+  </button>
+
+  
+
+  <!-- User Profile -->
+  <div class="sidenav__profile">
+    <img src="images/avatar.png" alt="User Avatar" class="sidenav__avatar" />
+    @if (isOpen()) {
+      <h3 class="sidenav__username">Abdulaziz Al-Abdullah</h3>
+      <p class="sidenav__role">Technology Solutions Developer</p>
+      <p class="sidenav__job-number">Job number 12233443 #</p>
+    }
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidenav__nav">
+    @for (item of navItems; track item.route) {
+      <a
+        class="sidenav__nav-item"
+        [routerLink]="item.route"
+        routerLinkActive="sidenav__nav-item--active"
+        [title]="!isOpen() ? item.label : ''"
+      >
+        <span class="material-icons sidenav__nav-icon">{{ item.icon }}</span>
+        @if (isOpen()) {
+          <span class="sidenav__nav-label">{{ item.label }}</span>
+        }
+      </a>
+    }
+  </nav>
+
+  <!-- Footer -->
+  <div class="sidenav__footer">
+    
+    @if (isOpen()) {
+      <img src="images/logo.png" alt="Royal Commission for Riyadh City" class="sidenav__footer-logo" />
+    }
+  </div>
+
+</aside>

@@ -1,0 +1,45 @@
+<div class="recent-updates">
+
+  <div class="recent-updates__header">
+    <h3 class="recent-updates__title">Recent Updates</h3>
+    <a class="recent-updates__view-all" href="#">View all Requests ↗</a>
+  </div>
+
+  <div class="recent-updates__table-wrapper">
+  <table class="recent-updates__table">
+    <thead>
+      <tr>
+        <th>Request</th>
+        <th>Status</th>
+        <th>Type</th>
+        <th>Created On</th>
+        <th>Satisfaction</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (req of requests; track $index) {
+        <tr>
+          <td>
+            <a class="recent-updates__id" href="#">{{ req.id }} ↗</a>
+          </td>
+          <td>
+            <span class="recent-updates__badge" [ngClass]="{
+              'recent-updates__badge--awaiting':    req.status === 'Awaiting Info',
+              'recent-updates__badge--in-progress': req.status === 'In Progress',
+              'recent-updates__badge--closed':      req.status === 'Closed'
+            }">{{ req.status }}</span>
+          </td>
+          <td>
+            <span class="recent-updates__type">{{ req.type }}</span>
+          </td>
+          <td class="recent-updates__date">{{ req.createdOn }}</td>
+          <td class="recent-updates__satisfaction">
+            <span class="material-icons recent-updates__star">star</span> -
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  </div>
+
+</div>

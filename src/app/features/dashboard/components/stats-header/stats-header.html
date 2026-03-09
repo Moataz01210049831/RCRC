@@ -1,0 +1,37 @@
+<div class="stats-header">
+
+  <!-- Greeting Row -->
+  <div class="stats-header__top">
+    <div>
+      <h2 class="stats-header__greeting">
+        Hi, <span class="stats-header__name">{{ userName }}</span>
+      </h2>
+      <p class="stats-header__subtitle">Manage and process customer requests</p>
+    </div>
+    <button class="stats-header__new-btn">
+      New Request <span class="stats-header__plus">+</span>
+    </button>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="stats-header__cards">
+    @for (stat of stats; track stat.label) {
+      <div class="stats-header__card">
+        <div class="stats-header__card-left">
+          <p class="stats-header__card-label">{{ stat.label }}</p>
+          <p class="stats-header__card-value">
+            <strong>{{ stat.count }}</strong> {{ stat.unit }}
+          </p>
+        </div>
+        <span class="material-icons stats-header__icon" [ngClass]="stat.iconClass">
+          @switch (stat.label) {
+            @case ('Active Requests') { bolt }
+            @case ('Awaiting Info')   { pending_actions }
+            @default                  { done_all }
+          }
+        </span>
+      </div>
+    }
+  </div>
+
+</div>
