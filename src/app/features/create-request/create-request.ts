@@ -74,9 +74,41 @@ export class CreateRequest {
     }
   }
 
+  submit() {
+    this.currentStep.set(4);
+    console.log('Request Submission', {
+      customer: {
+        useSaved:     this.useSaved(),
+        customerName: this.customerName,
+        email:        this.email,
+        phone:        this.phone,
+        idType:       this.idType,
+        idNumber:     this.idNumber,
+      },
+      request: {
+        category:     this.category,
+        sector:       this.sector,
+        department:   this.department,
+        service:      this.service,
+        requestTitle: this.requestTitle,
+        description:  this.description,
+      },
+      documents: this.uploadedFiles,
+    });
+  }
+
   back() {
     if (this.currentStep() > 1) {
       this.currentStep.set(this.currentStep() - 1);
     }
+  }
+
+  resetForm() {
+    this.currentStep.set(1);
+    this.useSaved.set(false);
+    this.customerName = ''; this.email = ''; this.phone = ''; this.idType = ''; this.idNumber = '';
+    this.category = 'Suggestions'; this.sector = ''; this.department = ''; this.service = '';
+    this.requestTitle = ''; this.description = '';
+    this.uploadedFiles = [];
   }
 }

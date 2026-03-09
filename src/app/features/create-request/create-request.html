@@ -145,10 +145,42 @@
         <app-file-upload (filesChange)="uploadedFiles = $event" />
       }
 
-      <!-- Step 4 placeholder -->
+      <!-- Step 4: Summary -->
       @if (currentStep() === 4) {
-        <h2 class="cr__section-title">Summary</h2>
-        <p class="cr__section-sub">Review your request before submitting.</p>
+        <div class="cr__summary">
+          <span class="material-icons cr__summary-icon">done_all</span>
+          <h2 class="cr__summary-title">Created Successfully!</h2>
+          <p class="cr__summary-desc">
+            Your request is under review. The review process will take <br/> 1-2 working days.
+          </p>
+          <p class="cr__summary-email">
+            We sent you an email to <strong>'{{ email }}'</strong> with all the details.
+          </p>
+
+          <div class="cr__summary-table">
+            <div class="cr__summary-row">
+              <span class="cr__summary-key">Request Number</span>
+              <span class="cr__summary-val">1234567890</span>
+            </div>
+            <div class="cr__summary-row">
+              <span class="cr__summary-key">Request Type</span>
+              <span class="cr__summary-val">{{ category }}</span>
+            </div>
+            <div class="cr__summary-row">
+              <span class="cr__summary-key">Customer Name</span>
+              <span class="cr__summary-val">{{ customerName }}</span>
+            </div>
+          </div>
+
+          <div class="cr__summary-actions">
+            <a class="cr__summary-link" routerLink="/requests">
+              View Requests <span class="material-icons">north_east</span>
+            </a>
+            <button class="cr__btn cr__btn--secondary cr__btn--icon" type="button" (click)="resetForm()">
+              Create Another Request <span class="material-icons">add</span>
+            </button>
+          </div>
+        </div>
       }
 
     </div>
@@ -156,12 +188,12 @@
 
   <!-- Footer Actions -->
   <div class="cr__footer">
-    @if (currentStep() > 1) {
+    @if (currentStep() > 1 && currentStep() < 4) {
       <button class="cr__btn cr__btn--secondary" (click)="back()">Back</button>
     }
-    @if (currentStep() === 4) {
-      <button class="cr__btn cr__btn--primary" (click)="next()">Submit</button>
-    } @else {
+    @if (currentStep() === 3) {
+      <button class="cr__btn cr__btn--primary" (click)="submit()">Submit</button>
+    } @else if (currentStep() < 4) {
       <button class="cr__btn cr__btn--primary" (click)="next()">Next</button>
     }
   </div>
