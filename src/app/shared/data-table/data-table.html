@@ -1,0 +1,40 @@
+<div class="dt__wrapper" [class.dt__wrapper--scrollable]="scrollable()">
+  <table class="dt__table">
+    <thead>
+      <tr>
+        @for (col of columns(); track col.key) {
+          <th>{{ col.label }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of data(); track $index) {
+        <tr>
+          @for (col of columns(); track col.key) {
+            <td>
+              @switch (col.type) {
+                @case ('link') {
+                  <a class="dt__id" href="#">{{ row[col.key] }} ↗</a>
+                }
+                @case ('badge') {
+                  <span class="dt__badge" [ngClass]="badgeClass(row[col.key])">{{ row[col.key] }}</span>
+                }
+                @case ('tag') {
+                  <span class="dt__tag">{{ row[col.key] }}</span>
+                }
+                @case ('star') {
+                  <span class="dt__satisfaction">
+                    <span class="material-icons dt__star">star</span> -
+                  </span>
+                }
+                @default {
+                  {{ row[col.key] }}
+                }
+              }
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

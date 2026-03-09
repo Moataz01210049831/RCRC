@@ -42,37 +42,7 @@
       </button>
 
       @if (activeExpanded()) {
-        <div class="requests__table-wrapper">
-          <table class="requests__table">
-            <thead>
-              <tr>
-                <th>Request</th>
-                <th>Status</th>
-                <th>Type</th>
-                <th>Created On</th>
-                <th>Satisfaction</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (req of activeRequests; track req.id) {
-                <tr>
-                  <td><a class="requests__id" href="#">{{ req.id }} ↗</a></td>
-                  <td>
-                    <span class="requests__badge" [ngClass]="{
-                      'requests__badge--awaiting':    req.status === 'Awaiting Info',
-                      'requests__badge--in-progress': req.status === 'In Progress'
-                    }">{{ req.status }}</span>
-                  </td>
-                  <td><span class="requests__type">{{ req.type }}</span></td>
-                  <td>{{ req.createdOn }}</td>
-                  <td class="requests__satisfaction">
-                    <span class="material-icons requests__star">star</span> -
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
+        <app-data-table [columns]="columns" [data]="activeRequests" />
       }
     </div>
   }
@@ -94,34 +64,7 @@
       }
 
       @if (closedExpanded()) {
-        <div class="requests__table-wrapper">
-          <table class="requests__table">
-            <thead>
-              <tr>
-                <th>Request</th>
-                <th>Status</th>
-                <th>Type</th>
-                <th>Created On</th>
-                <th>Satisfaction</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (req of closedRequests; track req.id) {
-                <tr>
-                  <td><a class="requests__id" href="#">{{ req.id }} ↗</a></td>
-                  <td>
-                    <span class="requests__badge requests__badge--closed">{{ req.status }}</span>
-                  </td>
-                  <td><span class="requests__type">{{ req.type }}</span></td>
-                  <td>{{ req.createdOn }}</td>
-                  <td class="requests__satisfaction">
-                    <span class="material-icons requests__star">star</span> -
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
+        <app-data-table [columns]="columns" [data]="closedRequests" />
       }
     </div>
   }
