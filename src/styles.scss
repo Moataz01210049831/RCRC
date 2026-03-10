@@ -78,3 +78,16 @@ html, body {
   overflow: hidden;
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* ── Layout content fills viewport ──────────────────── */
+.layout__content {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* ── Pages fill full content area ───────────────────── */
+.dashboard__card,
+.requests {
+  min-height: calc(100vh - 48px);
+}
