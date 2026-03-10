@@ -1,9 +1,5 @@
 .stats-header {
-  background: #fff;
-  border-radius: 12px;
   padding: 24px;
-  margin-bottom: 24px;
-  border: 1px solid #e8e8e8;
 
   &__top {
     display: flex;
@@ -19,8 +15,8 @@
 
   &__greeting {
     font-size: 22px;
-    font-weight: 400;
-    color: #1a1a1a;
+    color: var(--color-accent);
+    font-weight: 700;
     margin: 0 0 4px;
   }
 
