@@ -11,6 +11,9 @@ export class Sidenav {
   isOpen = input<boolean>(true);
   toggleNav = output<void>();
   contactExpanded = signal(true);
+  lang = signal<'EN' | 'AR'>('EN');
+
+  setLang(l: 'EN' | 'AR') { this.lang.set(l); }
 
   navItems = [
     { label: 'Dashboard', icon: 'dashboard', route: '/dashboard' },
