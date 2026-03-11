@@ -14,7 +14,7 @@
             <td>
               @switch (col.type) {
                 @case ('link') {
-                  <a class="dt__id" href="#">{{ row[col.key] }} ↗</a>
+                  <a class="dt__id" [routerLink]="['/request-details', row[col.key]]">{{ row[col.key] }} ↗</a>
                 }
                 @case ('badge') {
                   <span class="dt__badge" [ngClass]="badgeClass(row[col.key])">{{ row[col.key] }}</span>

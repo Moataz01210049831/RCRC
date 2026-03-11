@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 export interface TableColumn {
   key: string;
@@ -11,7 +12,7 @@ export type TableRow = Record<string, string>;
 
 @Component({
   selector: 'app-data-table',
-  imports: [NgClass],
+  imports: [NgClass, RouterLink],
   templateUrl: './data-table.html',
   styleUrl: './data-table.scss',
 })

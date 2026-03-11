@@ -37,6 +37,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/create-request/create-request').then((m) => m.CreateRequest),
       },
+      {
+        path: 'request-details/:id',
+        loadComponent: () =>
+          import('./features/request-details/request-details').then((m) => m.RequestDetails),
+      },
     ],
   },
   {

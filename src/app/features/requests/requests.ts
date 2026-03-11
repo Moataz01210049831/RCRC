@@ -28,10 +28,10 @@ export class Requests {
 
   allRequests: TableRow[] = [
     { id: '20260511566', status: 'Awaiting Info', type: 'Complaints',            createdOn: '20 Feb, 2026', satisfaction: '' },
-    { id: '20260511566', status: 'In Progress',   type: 'Training & Employment', createdOn: '20 Feb, 2026', satisfaction: '' },
-    { id: '20260511566', status: 'In Progress',   type: 'Training & Employment', createdOn: '20 Feb, 2026', satisfaction: '' },
-    { id: '20260511567', status: 'Closed',         type: 'Complaints',            createdOn: '18 Feb, 2026', satisfaction: '' },
-    { id: '20260511568', status: 'Closed',         type: 'Training & Employment', createdOn: '15 Feb, 2026', satisfaction: '' },
+    { id: '20260511564', status: 'In Progress',   type: 'Training & Employment', createdOn: '20 Feb, 2026', satisfaction: '' },
+    { id: '20260511563', status: 'In Progress',   type: 'Training & Employment', createdOn: '20 Feb, 2026', satisfaction: '' },
+    { id: '20260511561', status: 'Closed',         type: 'Complaints',            createdOn: '18 Feb, 2026', satisfaction: '' },
+    { id: '20260511569', status: 'Closed',         type: 'Training & Employment', createdOn: '15 Feb, 2026', satisfaction: '' },
   ];
 
   get filteredRequests(): TableRow[] {
