@@ -71,10 +71,18 @@
     @if (isOpen()) {
       <span class="material-icons sidenav__lang-icon">language</span>
       <span class="sidenav__lang-label">Language</span>
-      <select class="sidenav__lang-select" [value]="lang()" (change)="setLang($any($event.target).value)">
-        <option value="EN">EN</option>
-        <option value="AR">AR</option>
-      </select>
+      <div class="sidenav__lang-pill">
+        <span class="sidenav__lang-pill-text">{{ lang() }}</span>
+        <button class="sidenav__lang-pill-arrow" type="button" (click)="toggleLang()">
+          <span class="material-icons">{{ langOpen() ? 'expand_less' : 'expand_more' }}</span>
+        </button>
+        @if (langOpen()) {
+          <div class="sidenav__lang-dropdown">
+            <button type="button" (click)="setLang('EN')" [class.active]="lang() === 'EN'">EN</button>
+            <button type="button" (click)="setLang('AR')" [class.active]="lang() === 'AR'">AR</button>
+          </div>
+        }
+      </div>
     } @else {
       <span class="material-icons sidenav__lang-icon" [title]="lang()">language</span>
     }
