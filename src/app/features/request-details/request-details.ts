@@ -4,12 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-request-details',
   imports: [],
-  template: `
-    <div style="padding: 24px;">
-      <h2>Request Details</h2>
-      <p>Request Number: <strong>{{ requestId }}</strong></p>
-    </div>
-  `,
+  templateUrl: './request-details.html',
+  styleUrl: './request-details.scss',
 })
 export class RequestDetails implements OnInit {
   private route = inject(ActivatedRoute);
