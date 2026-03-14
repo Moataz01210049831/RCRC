@@ -1,4 +1,122 @@
-<div class="request-details">
-  <h2 class="request-details__title">Request Details</h2>
-  <p>Request Number: <strong>{{ requestId }}</strong></p>
+<div class="rd">
+
+  <!-- Header -->
+  <div class="rd__header">
+    <a class="rd__back" routerLink="/requests">
+      <span class="material-icons">chevron_left</span> Back
+    </a>
+    <div class="rd__badges">
+      <span class="rd__badge rd__badge--progress">In Progress</span>
+      <span class="rd__badge rd__badge--type">Suggestions</span>
+    </div>
+    <h1 class="rd__title">Request#{{ requestId }}</h1>
+  </div>
+
+  <!-- Body: two-column -->
+  <div class="rd__body">
+    <div class="row g-3">
+
+    <!-- Left: details + updates -->
+    <div class="rd__main col-12 col-lg-8">
+
+      <!-- Request Details card -->
+      <div class="rd__card">
+        <h3 class="rd__card-title">Request Details</h3>
+
+        <!-- Tabs -->
+        <div class="rd__tabs">
+          @for (tab of tabs; track tab) {
+            <button
+              class="rd__tab"
+              [class.rd__tab--active]="activeTab() === tab"
+              (click)="activeTab.set(tab)"
+            >{{ tab }}</button>
+          }
+        </div>
+
+        @if (activeTab() === 'Required Info') {
+          <div class="rd__table-wrap">
+            <table class="rd__table">
+              <thead>
+                <tr>
+                  <th>Sector</th>
+                  <th>Department</th>
+                  <th>Service</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ detailRow.sector }}</td>
+                  <td>{{ detailRow.department }}</td>
+                  <td>{{ detailRow.service }}</td>
+                  <td>{{ detailRow.description }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        } @else {
+          <p class="rd__empty">No data available for this tab.</p>
+        }
+      </div>
+
+      <!-- Request Updates card -->
+      <div class="rd__card">
+        <h3 class="rd__card-title">Request Updates</h3>
+        @for (update of updates; track $index) {
+          <div class="rd__update">
+            <div class="rd__update-header">
+              <span class="material-icons rd__update-avatar">account_circle</span>
+              <span class="rd__update-name">{{ update.name }}</span>
+              <span class="rd__update-date">{{ update.date }}</span>
+            </div>
+            <div class="rd__update-status rd__update-status--approved">
+              <span class="material-icons">check_circle</span>
+              {{ update.status }}
+              <span class="material-icons rd__update-chevron">expand_more</span>
+            </div>
+          </div>
+        }
+      </div>
+
+    </div>
+
+    <!-- Right: customer + timeline -->
+    <div class="rd__side col-12 col-lg-4">
+
+      <!-- Customer card -->
+      <div class="rd__card">
+        <h3 class="rd__card-title">Customer</h3>
+        <div class="rd__customer">
+          <span class="material-icons rd__customer-icon">account_circle</span>
+          <div>
+            <p class="rd__customer-name">Abdulaziz Abdulmohsen Al-Abdu...</p>
+            <p class="rd__customer-phone">+966 560 677 9999</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline card -->
+      <div class="rd__card">
+        <div class="rd__timeline-intro">
+          <span class="material-icons rd__timeline-clock">schedule</span>
+          <span class="rd__timeline-note">Prepare your portfolio and proposal.</span>
+        </div>
+        <ul class="rd__timeline">
+          @for (item of timeline; track $index) {
+            <li class="rd__timeline-item">
+              <span class="rd__timeline-dot"></span>
+              <div>
+                <p class="rd__timeline-label">{{ item.label }}</p>
+                <p class="rd__timeline-sub">{{ item.sub }}</p>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+
+    </div>
+    </div><!-- /row -->
+  </div>
+
 </div>
