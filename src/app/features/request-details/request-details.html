@@ -34,29 +34,79 @@
           }
         </div>
 
-        @if (activeTab() === 'Required Info') {
-          <div class="rd__table-wrap">
-            <table class="rd__table">
-              <thead>
-                <tr>
-                  <th>Sector</th>
-                  <th>Department</th>
-                  <th>Service</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{ detailRow.sector }}</td>
-                  <td>{{ detailRow.department }}</td>
-                  <td>{{ detailRow.service }}</td>
-                  <td>{{ detailRow.description }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        } @else {
-          <p class="rd__empty">No data available for this tab.</p>
+        @switch (activeTab()) {
+
+          @case ('Required Info') {
+            <div class="rd__table-wrap">
+              <table class="rd__table">
+                <thead>
+                  <tr>
+                    <th>Sector</th>
+                    <th>Department</th>
+                    <th>Service</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ requiredInfo.sector }}</td>
+                    <td>{{ requiredInfo.department }}</td>
+                    <td>{{ requiredInfo.service }}</td>
+                    <td>{{ requiredInfo.description }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          }
+
+          @case ('Consultant Info') {
+            <dl class="rd__fields">
+              @for (field of consultantFields; track field.label) {
+                <div class="rd__field-row">
+                  <dt class="rd__field-label">{{ field.label }}</dt>
+                  <dd class="rd__field-value">{{ field.value }}</dd>
+                </div>
+              }
+            </dl>
+          }
+
+          @case ('Landlord Info') {
+            <dl class="rd__fields">
+              @for (field of landlordFields; track field.label) {
+                <div class="rd__field-row">
+                  <dt class="rd__field-label">{{ field.label }}</dt>
+                  <dd class="rd__field-value">{{ field.value }}</dd>
+                </div>
+              }
+            </dl>
+          }
+
+          @case ('Project Land Info') {
+            <dl class="rd__fields">
+              @for (field of projectLandFields; track field.label) {
+                <div class="rd__field-row">
+                  <dt class="rd__field-label">{{ field.label }}</dt>
+                  <dd class="rd__field-value">{{ field.value }}</dd>
+                </div>
+              }
+            </dl>
+          }
+
+          @case ('Attachments') {
+            <div class="rd__attachments">
+              @for (file of attachments; track file.name) {
+                <div class="rd__attachment-row">
+                  <span class="material-icons rd__attachment-icon">description</span>
+                  <span class="rd__attachment-name">{{ file.name }}</span>
+                  <span class="rd__attachment-meta">{{ file.type }} · {{ file.size }}</span>
+                  <a class="rd__attachment-dl" href="#" download>
+                    <span class="material-icons">download</span>
+                  </a>
+                </div>
+              }
+            </div>
+          }
+
         }
       </div>
 
