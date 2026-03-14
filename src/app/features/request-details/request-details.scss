@@ -28,7 +28,13 @@
     .material-icons { font-size: 18px; }
     &:hover { text-decoration: underline; }
   }
-
+  &__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 8px;
+  }
   &__badges {
     display: flex;
     gap: 8px;
