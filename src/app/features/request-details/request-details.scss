@@ -261,7 +261,21 @@
     display: flex;
     align-items: flex-start;
     gap: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 0;
+    padding-bottom: 16px;
+    position: relative;
+    margin-inline-start: 4px;
+
+    // line going down from clock icon center to the first timeline dot
+    &::after {
+     content: "";
+    position: absolute;
+    left: 9px;
+    top: 20px;
+    bottom: -5px;
+    width: 1px;
+    background: var(--color-border-mid);
+    }
   }
 
   &__timeline-clock {
@@ -290,21 +304,21 @@
     position: relative;
     padding-bottom: 20px;
 
-    // Line drawn through the dot center (left: 4px = half of 9px dot)
+    // Line through dot center; left: 9px matches clock icon center above
     &::before {
       content: '';
       position: absolute;
-      left: 4px;
-      top: 11px;
+      left: 9px;
+      top: 0;
       bottom: 0;
       width: 1px;
       background: var(--color-border-mid);
     }
-    &::after{
-       content: '';
+     &::after {
+      content: '';
       position: absolute;
-      left: 4px;
-      top: 11px;
+      left: 9px;
+      top: 0;
       bottom: 0;
       width: 1px;
       background: var(--color-border-mid);
@@ -312,7 +326,6 @@
 
     &:last-child {
       padding-bottom: 0;
-      // Stop line at dot center on last item
       &::before { bottom: auto; height: 7px; }
     }
   }
@@ -325,6 +338,7 @@
     background: #fff;
     border: 2px solid var(--color-border-mid);
     margin-top: 3px;
+    margin-left: 5px;   // 9px(clock center) - 9px/2 = 4.5px ≈ 5px to align dot center with line
     position: relative;
     z-index: 1;
   }
