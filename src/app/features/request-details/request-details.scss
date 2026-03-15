@@ -457,15 +457,14 @@
 
   // ── Bottom Sheet ──────────────────────────────────────
   &__sheet {
-    position: absolute;
-    bottom: -170px;
-    left: 0;
-    right: 0;
+    position: sticky;
+    width: 66%;
+    bottom: 0;
     background: #fff;
-    border: 1px solid var(--color-border);
-    border-radius: 12px 12px 10px 10px;
-    padding: 16px 18px 20px;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.10);
+    border-top: 1px solid var(--color-border);
+    border-radius: 0 0 12px 12px;
+    padding: 16px 24px 20px;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
     z-index: 10;
     animation: sheet-slide-up 0.22s ease;
   }

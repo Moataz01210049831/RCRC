@@ -129,28 +129,6 @@
         }
       </div>
 
-      <!-- Bottom sheet — only when Awaiting Info -->
-      @if (status === 'Awaiting Info' && sheetOpen()) {
-        <div class="rd__sheet">
-          <h3 class="rd__sheet-title">Action Required</h3>
-          <div class="rd__action-alert">
-            <span class="material-icons rd__action-alert-icon">warning_amber</span>
-            <div>
-              <p class="rd__action-alert-title">Additional Information Required</p>
-              <p class="rd__action-alert-msg">Please provide the requested documents to continue processing your request.</p>
-            </div>
-          </div>
-          <div class="rd__action-btns">
-            <button class="rd__action-btn rd__action-btn--update" (click)="openUpdateModal()">
-              Update the request <span class="material-icons">upload</span>
-            </button>
-            <button class="rd__action-btn rd__action-btn--cancel" (click)="closeSheet()">
-              Cancel the request <span class="material-icons">close</span>
-            </button>
-          </div>
-        </div>
-      }
-
     </div>
 
     <!-- Right: customer + timeline -->
@@ -190,6 +168,28 @@
     </div>
     </div><!-- /row -->
   </div>
+
+  <!-- Bottom sheet — sticks to bottom of .rd (sticky) -->
+  @if (status === 'Awaiting Info' && sheetOpen()) {
+    <div class="rd__sheet">
+      <h3 class="rd__sheet-title">Action Required</h3>
+      <div class="rd__action-alert">
+        <span class="material-icons rd__action-alert-icon">warning_amber</span>
+        <div>
+          <p class="rd__action-alert-title">Additional Information Required</p>
+          <p class="rd__action-alert-msg">Please provide the requested documents to continue processing your request.</p>
+        </div>
+      </div>
+      <div class="rd__action-btns">
+        <button class="rd__action-btn rd__action-btn--update" (click)="openUpdateModal()">
+          Update the request <span class="material-icons">upload</span>
+        </button>
+        <button class="rd__action-btn rd__action-btn--cancel" (click)="closeSheet()">
+          Cancel the request <span class="material-icons">close</span>
+        </button>
+      </div>
+    </div>
+  }
 
   <!-- Update Request Modal -->
   @if (updateModalOpen()) {
