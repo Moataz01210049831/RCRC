@@ -17,7 +17,7 @@
     <div class="row g-3">
 
     <!-- Left: details + updates -->
-    <div class="rd__main col-12 col-lg-8">
+    <div class="rd__main col-12 col-lg-8" style="position:relative">
 
       <!-- Request Details card -->
       <div class="rd__card">
@@ -128,6 +128,28 @@
           </div>
         }
       </div>
+
+      <!-- Bottom sheet — only when Awaiting Info -->
+      @if (status === 'Awaiting Info' && sheetOpen()) {
+        <div class="rd__sheet">
+          <h3 class="rd__sheet-title">Action Required</h3>
+          <div class="rd__action-alert">
+            <span class="material-icons rd__action-alert-icon">warning_amber</span>
+            <div>
+              <p class="rd__action-alert-title">Additional Information Required</p>
+              <p class="rd__action-alert-msg">Please provide the requested documents to continue processing your request.</p>
+            </div>
+          </div>
+          <div class="rd__action-btns">
+            <button class="rd__action-btn rd__action-btn--update">
+              Update the request <span class="material-icons">upload</span>
+            </button>
+            <button class="rd__action-btn rd__action-btn--cancel" (click)="closeSheet()">
+              Cancel the request <span class="material-icons">close</span>
+            </button>
+          </div>
+        </div>
+      }
 
     </div>
 

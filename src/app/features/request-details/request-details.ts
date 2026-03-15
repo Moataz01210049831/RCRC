@@ -16,6 +16,10 @@ export class RequestDetails implements OnInit {
   private route = inject(ActivatedRoute);
 
   requestId = '';
+  status = 'Awaiting Info';
+  sheetOpen = signal(true);
+
+  closeSheet() { this.sheetOpen.set(false); }
   activeTab = signal<DetailTab>('Required Info');
 
   tabs: DetailTab[] = ['Required Info', 'Consultant Info', 'Landlord Info', 'Project Land Info', 'Attachments'];
