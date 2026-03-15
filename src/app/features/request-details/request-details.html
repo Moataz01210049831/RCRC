@@ -141,7 +141,7 @@
             </div>
           </div>
           <div class="rd__action-btns">
-            <button class="rd__action-btn rd__action-btn--update">
+            <button class="rd__action-btn rd__action-btn--update" (click)="openUpdateModal()">
               Update the request <span class="material-icons">upload</span>
             </button>
             <button class="rd__action-btn rd__action-btn--cancel" (click)="closeSheet()">
@@ -190,5 +190,34 @@
     </div>
     </div><!-- /row -->
   </div>
+
+  <!-- Update Request Modal -->
+  @if (updateModalOpen()) {
+    <div class="rd__modal-backdrop" (click)="closeUpdateModal()">
+      <div class="rd__modal" (click)="$event.stopPropagation()">
+
+        <div class="rd__modal-header">
+          <span class="rd__modal-title">Additional Information Required</span>
+          <button class="rd__modal-close" type="button" (click)="closeUpdateModal()">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
+
+        <p class="rd__modal-desc">Please provide the requested documents to continue processing your request.</p>
+
+        <p class="rd__modal-label">Attachments</p>
+        <app-file-upload hint="PDF, JPEG and PNG up to 5MB" label="Upload Document" (filesChange)="updateFiles = $event" />
+
+        <p class="rd__modal-label">Notes</p>
+        <textarea class="rd__modal-textarea" placeholder="A message for the requester" [(ngModel)]="updateNotes"></textarea>
+
+        <div class="rd__modal-footer">
+          <button class="rd__modal-btn rd__modal-btn--cancel" type="button" (click)="closeUpdateModal()">Cancel</button>
+          <button class="rd__modal-btn rd__modal-btn--submit" type="button" (click)="submitUpdate()">Submit</button>
+        </div>
+
+      </div>
+    </div>
+  }
 
 </div>

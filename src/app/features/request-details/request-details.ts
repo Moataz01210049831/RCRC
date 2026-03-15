@@ -1,5 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { FileUpload } from '../../shared/file-upload/file-upload';
 
 export type DetailTab = 'Required Info' | 'Consultant Info' | 'Landlord Info' | 'Project Land Info' | 'Attachments';
 
@@ -8,7 +10,7 @@ export interface TabAttachment { name: string; size: string; type: string; }
 
 @Component({
   selector: 'app-request-details',
-  imports: [RouterLink],
+  imports: [RouterLink, FileUpload, FormsModule],
   templateUrl: './request-details.html',
   styleUrl: './request-details.scss',
 })
@@ -17,9 +19,22 @@ export class RequestDetails implements OnInit {
 
   requestId = '';
   status = 'Awaiting Info';
-  sheetOpen = signal(true);
+  sheetOpen    = signal(true);
+  updateModalOpen = signal(false);
+  updateNotes = '';
+  updateFiles: import('../../shared/file-upload/file-upload').UploadedFile[] = [];
 
-  closeSheet() { this.sheetOpen.set(false); }
+  closeSheet()       { this.sheetOpen.set(false); }
+  openUpdateModal()  { this.updateModalOpen.set(true); }
+  closeUpdateModal() { this.updateModalOpen.set(false); }
+
+  submitUpdate() {
+    console.log('Update Submission', {
+      notes: this.updateNotes,
+      files: this.updateFiles,
+    });
+    this.closeUpdateModal();
+  }
   activeTab = signal<DetailTab>('Required Info');
 
   tabs: DetailTab[] = ['Required Info', 'Consultant Info', 'Landlord Info', 'Project Land Info', 'Attachments'];
