@@ -18,7 +18,7 @@ export class RequestDetails implements OnInit {
   private route = inject(ActivatedRoute);
 
   requestId = '';
-  status = 'Awaiting Info';
+  status = 'Resolved';
   sheetOpen    = signal(true);
   updateModalOpen = signal(false);
   updateNotes = '';
@@ -27,6 +27,9 @@ export class RequestDetails implements OnInit {
   closeSheet()       { this.sheetOpen.set(false); }
   openUpdateModal()  { this.updateModalOpen.set(true); }
   closeUpdateModal() { this.updateModalOpen.set(false); }
+
+  onResolutionAgree()    { console.log('Resolution: Agreed');    this.closeSheet(); }
+  onResolutionDisagree() { console.log('Resolution: Disagreed'); this.closeSheet(); }
 
   submitUpdate() {
     console.log('Update Submission', {

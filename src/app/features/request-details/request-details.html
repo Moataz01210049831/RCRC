@@ -169,25 +169,48 @@
     </div><!-- /row -->
   </div>
 
-  <!-- Bottom sheet — sticks to bottom of .rd (sticky) -->
-  @if (status === 'Awaiting Info' && sheetOpen()) {
+  <!-- Bottom sheet — shown for Awaiting Info or Resolved -->
+  @if (sheetOpen() && (status === 'Awaiting Info' || status === 'Resolved')) {
     <div class="rd__sheet">
-      <h3 class="rd__sheet-title">Action Required</h3>
-      <div class="rd__action-alert">
-        <span class="material-icons rd__action-alert-icon">warning_amber</span>
-        <div>
-          <p class="rd__action-alert-title">Additional Information Required</p>
-          <p class="rd__action-alert-msg">Please provide the requested documents to continue processing your request.</p>
+
+      @if (status === 'Awaiting Info') {
+        <h3 class="rd__sheet-title">Action Required</h3>
+        <div class="rd__action-alert rd__action-alert--warning">
+          <span class="material-icons rd__action-alert-icon">warning_amber</span>
+          <div>
+            <p class="rd__action-alert-title">Additional Information Required</p>
+            <p class="rd__action-alert-msg">Please provide the requested documents to continue processing your request.</p>
+          </div>
         </div>
-      </div>
-      <div class="rd__action-btns">
-        <button class="rd__action-btn rd__action-btn--update" (click)="openUpdateModal()">
-          Update the request <span class="material-icons">upload</span>
-        </button>
-        <button class="rd__action-btn rd__action-btn--cancel" (click)="closeSheet()">
-          Cancel the request <span class="material-icons">close</span>
-        </button>
-      </div>
+        <div class="rd__action-btns">
+          <button class="rd__action-btn rd__action-btn--update" (click)="openUpdateModal()">
+            Update the request <span class="material-icons">upload</span>
+          </button>
+          <button class="rd__action-btn rd__action-btn--cancel" (click)="closeSheet()">
+            Cancel the request <span class="material-icons">close</span>
+          </button>
+        </div>
+      }
+
+      @if (status === 'Resolved') {
+        <h3 class="rd__sheet-title">Action Required</h3>
+        <div class="rd__action-alert rd__action-alert--info">
+          <span class="material-icons rd__action-alert-icon">info</span>
+          <div>
+            <p class="rd__action-alert-title">Request Resolution Confirmation</p>
+            <p class="rd__action-alert-msg">A decision has been made on your request. Please confirm whether you agree with the outcome.</p>
+          </div>
+        </div>
+        <div class="rd__action-btns">
+          <button class="rd__action-btn rd__action-btn--agree" (click)="onResolutionAgree()">
+            Agree <span class="material-icons">thumb_up</span>
+          </button>
+          <button class="rd__action-btn rd__action-btn--disagree" (click)="onResolutionDisagree()">
+            Disagree <span class="material-icons">thumb_down</span>
+          </button>
+        </div>
+      }
+
     </div>
   }
 
