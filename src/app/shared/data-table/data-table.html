@@ -1,4 +1,6 @@
 <div class="dt__wrapper" [class.dt__wrapper--scrollable]="scrollable()">
+
+  <!-- Desktop table -->
   <table class="dt__table">
     <thead>
       <tr>
@@ -37,4 +39,32 @@
       }
     </tbody>
   </table>
+
+  <!-- Mobile cards -->
+  <div class="dt__cards">
+    @for (row of data(); track $index) {
+      <div class="dt__card">
+        <div class="dt__card-top">
+          <a class="dt__id" [routerLink]="['/request-details', row[linkKey()]]">
+            {{ row[linkKey()] }} <span class="material-icons dt__card-arrow">north_east</span>
+          </a>
+          <span class="dt__card-date">{{ row[dateKey()] }}</span>
+        </div>
+        <div class="dt__card-badges">
+          @if (row[badgeKey()]) {
+            <span class="dt__badge" [ngClass]="badgeClass(row[badgeKey()])">{{ row[badgeKey()] }}</span>
+          }
+          @if (row[tagKey()]) {
+            <span class="dt__tag">{{ row[tagKey()] }}</span>
+          }
+        </div>
+        <div class="dt__card-bottom">
+          <span class="dt__satisfaction">
+            <span class="material-icons dt__star">star</span> -
+          </span>
+        </div>
+      </div>
+    }
+  </div>
+
 </div>
