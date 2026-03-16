@@ -60,4 +60,35 @@
 
     </form>
   </div>
+
+  <!-- Footer -->
+  <footer class="login-footer">
+    <div class="login-footer__links">
+      <a class="login-footer__link" href="#">terms of use</a>
+      <a class="login-footer__link" href="#">privacy policy</a>
+      <a class="login-footer__link" href="#">Disclaimer</a>
+    </div>
+
+    <div class="login-footer__brand">
+      <img src="images/logo.png" alt="RCRC" class="login-footer__brand-logo" />
+     
+    </div>
+
+    <div class="login-footer__lang">
+      <span class="material-icons login-footer__lang-icon">language</span>
+      <span class="login-footer__lang-label">Language</span>
+      <div class="login-footer__lang-pill">
+        <span class="login-footer__lang-pill-text">{{ lang() }}</span>
+        <button class="login-footer__lang-pill-arrow" type="button" (click)="toggleLang()">
+          <span class="material-icons">{{ langOpen() ? 'expand_less' : 'expand_more' }}</span>
+        </button>
+        @if (langOpen()) {
+          <div class="login-footer__lang-dropdown">
+            <button type="button" (click)="setLang('EN')" [class.active]="lang() === 'EN'">EN</button>
+            <button type="button" (click)="setLang('AR')" [class.active]="lang() === 'AR'">AR</button>
+          </div>
+        }
+      </div>
+    </div>
+  </footer>
 </div>

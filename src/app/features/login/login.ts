@@ -14,6 +14,10 @@ export class Login {
   password = '123456';
   error = signal('');
   showPassword = signal(false);
+  lang      = signal('EN');
+  langOpen  = signal(false);
+  toggleLang() { this.langOpen.update(v => !v); }
+  setLang(l: string) { this.lang.set(l); this.langOpen.set(false); }
 
   constructor(private auth: Auth, private router: Router) {}
 
