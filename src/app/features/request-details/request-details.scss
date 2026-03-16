@@ -86,6 +86,7 @@
     border: 1px solid var(--color-border);
     border-radius: 10px;
     padding: 16px 18px;
+    background: #FAFAFC;
   }
 
   &__card-title {
@@ -98,48 +99,39 @@
   // ── Tabs ─────────────────────────────────────────────
   &__tabs {
     display: flex;
-    gap: 0;
-    border-bottom: 1px solid var(--color-border);
+    gap: 2px;
+    background: var(--color-bg-subtle);
+    border-radius: 8px;
+    padding: 4px;
     margin-bottom: 16px;
+    flex-wrap: wrap;
 
     @media (max-width: 768px) {
       flex-direction: column;
-      border-bottom: none;
+      border-radius: 8px;
+      gap: 2px;
     }
   }
 
   &__tab {
-    padding: 8px 14px;
+    padding: 6px 14px;
     background: none;
     border: none;
-    border-bottom: 2px solid transparent;
+    border-radius: 6px;
     font-size: 13px;
     color: var(--color-text-muted);
     cursor: pointer;
     white-space: nowrap;
-    transition: color 0.2s, border-color 0.2s;
-    margin-bottom: -1px;
+    transition: background 0.15s, color 0.15s;
 
     &--active {
+      background: #fff;
       color: var(--color-text);
       font-weight: 600;
-      border-bottom-color: var(--color-primary);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
-    &:hover:not(&--active) { color: var(--color-text); }
-
-    @media (max-width: 768px) {
-      border-bottom: 1px solid var(--color-border);
-      text-align: left;
-      padding: 10px 14px;
-      margin-bottom: 0;
-
-      &--active {
-        border-bottom-color: var(--color-border);
-        border-left: 3px solid var(--color-primary);
-        background: var(--color-bg-hover);
-      }
-    }
+    &:hover:not(&--active) { background: var(--color-border-faint); }
   }
 
   // ── Table ─────────────────────────────────────────────
