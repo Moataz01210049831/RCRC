@@ -243,4 +243,105 @@
     </div>
   }
 
+  <!-- Disagree / Request Review Modal -->
+  @if (disagreeModalOpen()) {
+    <div class="rd__modal-backdrop" (click)="closeDisagreeModal()">
+      <div class="rd__modal" (click)="$event.stopPropagation()">
+
+        <div class="rd__modal-header">
+          <span class="rd__modal-title">Request Review</span>
+          <button class="rd__modal-close" type="button" (click)="closeDisagreeModal()">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
+
+        <p class="rd__modal-desc">
+          You have indicated that you do not agree with the decision made on your request.
+        </p>
+        <p class="rd__modal-desc">
+          Please provide additional details explaining your concern.<br>
+          Your request will be forwarded for further review.
+        </p>
+
+        <p class="rd__modal-label" style="font-size:13px;font-weight:400;text-transform:none;letter-spacing:0;margin-bottom:12px;">
+          How satisfied are you with how your request was handled?
+        </p>
+
+        <div class="rd__stars">
+          @for (star of [1,2,3,4,5]; track star) {
+            <button type="button" class="rd__star" [class.rd__star--active]="disagreeRating() >= star" (click)="disagreeRating.set(star)">
+              <span class="material-icons">{{ disagreeRating() >= star ? 'star' : 'star_border' }}</span>
+            </button>
+          }
+        </div>
+        <div class="rd__stars-labels">
+          <span>1</span><span>5</span>
+        </div>
+
+        <p class="rd__modal-label" style="margin-top:20px;">Reason for disagreement</p>
+        <textarea
+          class="rd__modal-textarea"
+          placeholder="Please explain why you disagree with the decision..."
+          [(ngModel)]="disagreeReason"
+        ></textarea>
+
+        <div class="rd__modal-footer">
+          <button class="rd__modal-btn rd__modal-btn--cancel" type="button" (click)="closeDisagreeModal()">Cancel</button>
+          <button class="rd__modal-btn rd__modal-btn--submit" type="button" (click)="submitReview()">Submit for Review</button>
+        </div>
+
+      </div>
+    </div>
+  }
+
+  <!-- Agree / Closure Modal -->
+  @if (agreeModalOpen()) {
+    <div class="rd__modal-backdrop" (click)="closeAgreeModal()">
+      <div class="rd__modal" (click)="$event.stopPropagation()">
+
+        <div class="rd__modal-header">
+          <span class="rd__modal-title">Confirm Closure &amp; Rate Your Experience</span>
+          <button class="rd__modal-close" type="button" (click)="closeAgreeModal()">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
+
+        <p class="rd__modal-desc">
+          You have confirmed that you agree with the decision made on your request.
+        </p>
+        <p class="rd__modal-desc">
+          Before we finalize the closure, we would appreciate your feedback on your experience.
+        </p>
+
+        <p class="rd__modal-label" style="font-size:13px;font-weight:400;text-transform:none;letter-spacing:0;margin-bottom:12px;">
+          How satisfied are you with how your request was handled?
+        </p>
+
+        <div class="rd__stars">
+          @for (star of [1,2,3,4,5]; track star) {
+            <button type="button" class="rd__star" [class.rd__star--active]="agreeRating() >= star" (click)="agreeRating.set(star)">
+              <span class="material-icons">{{ agreeRating() >= star ? 'star' : 'star_border' }}</span>
+            </button>
+          }
+        </div>
+        <div class="rd__stars-labels">
+          <span>1</span><span>5</span>
+        </div>
+
+        <p class="rd__modal-label" style="margin-top:20px;">Comment (Optional)</p>
+        <textarea
+          class="rd__modal-textarea"
+          placeholder="Share any feedback that could help us improve our services."
+          [(ngModel)]="agreeComment"
+        ></textarea>
+
+        <div class="rd__modal-footer">
+          <button class="rd__modal-btn rd__modal-btn--cancel" type="button" (click)="closeAgreeModal()">Cancel</button>
+          <button class="rd__modal-btn rd__modal-btn--submit" type="button" (click)="confirmClosure()">Confirm and Close Request</button>
+        </div>
+
+      </div>
+    </div>
+  }
+
 </div>

@@ -571,6 +571,35 @@
     }
   }
 
+  // ── Star Rating ───────────────────────────────────────
+  &__stars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
+  &__star {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: var(--color-border-mid);
+
+    .material-icons { font-size: 28px; }
+
+    &--active { color: var(--color-accent); }
+    &:hover   { color: var(--color-accent); opacity: 0.8; }
+  }
+
+  &__stars-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 156px; // 5 × 28px + 4 × 4px gap
+    font-size: 11px;
+    color: var(--color-text-subtle);
+    margin-bottom: 4px;
+  }
+
   // ── Timeline ─────────────────────────────────────────
   &__timeline-intro {
     display: flex;

@@ -28,8 +28,36 @@ export class RequestDetails implements OnInit {
   openUpdateModal()  { this.updateModalOpen.set(true); }
   closeUpdateModal() { this.updateModalOpen.set(false); }
 
-  onResolutionAgree()    { console.log('Resolution: Agreed');    this.closeSheet(); }
-  onResolutionDisagree() { console.log('Resolution: Disagreed'); this.closeSheet(); }
+  agreeModalOpen = signal(false);
+  agreeRating    = signal(0);
+  agreeComment   = '';
+
+  disagreeModalOpen  = signal(false);
+  disagreeRating     = signal(0);
+  disagreeReason     = '';
+
+  onResolutionAgree()    { this.agreeModalOpen.set(true); }
+  onResolutionDisagree() { this.disagreeModalOpen.set(true); }
+  closeAgreeModal()      { this.agreeModalOpen.set(false); }
+  closeDisagreeModal()   { this.disagreeModalOpen.set(false); }
+
+  submitReview() {
+    console.log('Disagree / Request Review', {
+      rating: this.disagreeRating(),
+      reason: this.disagreeReason,
+    });
+    this.closeDisagreeModal();
+    this.closeSheet();
+  }
+
+  confirmClosure() {
+    console.log('Closure Confirmation', {
+      rating:  this.agreeRating(),
+      comment: this.agreeComment,
+    });
+    this.closeAgreeModal();
+    this.closeSheet();
+  }
 
   submitUpdate() {
     console.log('Update Submission', {
