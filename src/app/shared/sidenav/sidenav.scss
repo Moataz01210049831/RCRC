@@ -282,7 +282,9 @@ $nav-collapsed-width: 64px;
     gap: 12px;
     margin-top: auto;
   }
-
+  &__footer-logo{
+    width: 100%;
+  }
   &__footer-avatar {
     width: 32px;
     height: 32px;
