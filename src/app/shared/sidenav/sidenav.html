@@ -84,7 +84,17 @@
         }
       </div>
     } @else {
-      <span class="material-icons sidenav__lang-icon" [title]="lang()">language</span>
+      <div class="sidenav__lang-pill" style="position:relative;">
+        <button class="sidenav__lang-pill-arrow" type="button" (click)="toggleLang()" style="padding: 4px 8px;">
+          <span class="material-icons sidenav__lang-icon">language</span>
+        </button>
+        @if (langOpen()) {
+          <div class="sidenav__lang-dropdown" style="left:0;right:auto;">
+            <button type="button" (click)="setLang('EN')" [class.active]="lang() === 'EN'">EN</button>
+            <button type="button" (click)="setLang('AR')" [class.active]="lang() === 'AR'">AR</button>
+          </div>
+        }
+      </div>
     }
   </div>
 
