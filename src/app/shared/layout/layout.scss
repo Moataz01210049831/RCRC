@@ -18,4 +18,20 @@ $nav-collapsed-width: 64px;
   &--collapsed .layout__content {
     margin-left: $nav-collapsed-width;
   }
+
+  @media (max-width: 768px) {
+    &__content,
+    &--collapsed &__content {
+      margin-left: 0;
+      padding: 16px;
+    }
+
+    app-sidenav {
+      width: $nav-collapsed-width !important;
+      min-width: $nav-collapsed-width !important;
+      z-index: 200;
+
+      .sidenav__toggle { display: none; }
+    }
+  }
 }
