@@ -10,15 +10,19 @@
 }
 
 .login-footer {
-  width: 100%;
-  max-width: 960px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 20px 0 8px;
-  flex-wrap: wrap;
-
+    position: fixed;
+    bottom: 34px;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 16px;
+    padding: 14px 32px;
+    background: #f5f5f5;
+    flex-wrap: wrap;
+    width: 46%;
+    margin: auto;
   &__links {
     display: flex;
     gap: 16px;
