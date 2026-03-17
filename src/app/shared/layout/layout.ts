@@ -9,9 +9,10 @@ import { Sidenav } from '../sidenav/sidenav';
   styleUrl: './layout.scss',
 })
 export class Layout {
-  isNavOpen = signal(true);
+  isNavOpen     = signal(true);
+  mobileNavOpen = signal(false);
 
-  toggleNav() {
-    this.isNavOpen.update((v) => !v);
-  }
+  toggleNav()      { this.isNavOpen.update((v) => !v); }
+  openMobileNav()  { this.mobileNavOpen.set(true); this.isNavOpen.set(true); }
+  closeMobileNav() { this.mobileNavOpen.set(false); }
 }

@@ -1,6 +1,25 @@
 <div class="layout" [class.layout--collapsed]="!isNavOpen()">
-  <app-sidenav [isOpen]="isNavOpen()" (toggleNav)="toggleNav()" />
+
+  <!-- Mobile top bar -->
+  <div class="layout__mobile-bar">
+    <button class="layout__hamburger" (click)="openMobileNav()">
+      <span class="material-icons">menu</span>
+    </button>
+    <span class="layout__mobile-logo">CRM</span>
+  </div>
+
+  <!-- Mobile backdrop -->
+  @if (mobileNavOpen()) {
+    <div class="layout__backdrop" (click)="closeMobileNav()"></div>
+  }
+
+  <!-- Sidenav: desktop fixed, mobile drawer -->
+  <div class="layout__nav" [class.layout__nav--open]="mobileNavOpen()">
+    <app-sidenav [isOpen]="isNavOpen()" (toggleNav)="toggleNav()" />
+  </div>
+
   <main class="layout__content">
     <router-outlet />
   </main>
+
 </div>
