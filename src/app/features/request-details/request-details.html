@@ -24,27 +24,30 @@
         <h3 class="rd__card-title">Request Details</h3>
 
         <!-- Tabs -->
-        <div class="rd__tabs">
-          @for (tab of tabs; track tab) {
-            <button
-              class="rd__tab"
-              [class.rd__tab--active]="activeTab() === tab"
-              (click)="activeTab.set(tab)"
-            >{{ tab }}</button>
-          }
+        <div class="rd__tabs-wrap">
+          <div class="rd__tabs" #tabsRow>
+            @for (tab of tabs; track tab) {
+              <button
+                class="rd__tab"
+                [class.rd__tab--active]="activeTab() === tab"
+                (click)="activeTab.set(tab)"
+              >{{ tab }}</button>
+            }
+          </div>
+          <button class="rd__tabs-arrow" (click)="scrollTabs(tabsRow)">
+            <span class="material-icons">chevron_right</span>
+          </button>
         </div>
 
         @switch (activeTab()) {
 
           @case ('Required Info') {
-            <div class="rd__table-wrap">
+            <!-- Desktop: table -->
+            <div class="rd__table-wrap rd__required-table">
               <table class="rd__table">
                 <thead>
                   <tr>
-                    <th>Sector</th>
-                    <th>Department</th>
-                    <th>Service</th>
-                    <th>Description</th>
+                    <th>Sector</th><th>Department</th><th>Service</th><th>Description</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -57,6 +60,25 @@
                 </tbody>
               </table>
             </div>
+            <!-- Mobile: field rows -->
+            <dl class="rd__fields rd__required-fields">
+              <div class="rd__field-row">
+                <dt class="rd__field-label">Sector</dt>
+                <dd class="rd__field-value">{{ requiredInfo.sector }}</dd>
+              </div>
+              <div class="rd__field-row">
+                <dt class="rd__field-label">Department</dt>
+                <dd class="rd__field-value">{{ requiredInfo.department }}</dd>
+              </div>
+              <div class="rd__field-row">
+                <dt class="rd__field-label">Service</dt>
+                <dd class="rd__field-value">{{ requiredInfo.service }}</dd>
+              </div>
+              <div class="rd__field-row">
+                <dt class="rd__field-label">Description</dt>
+                <dd class="rd__field-value">{{ requiredInfo.description }}</dd>
+              </div>
+            </dl>
           }
 
           @case ('Consultant Info') {

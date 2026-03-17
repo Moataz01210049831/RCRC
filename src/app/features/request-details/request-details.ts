@@ -120,6 +120,10 @@ export class RequestDetails implements OnInit {
     { label: 'Assigned to Department', sub: 'Ticket assigned to Building Permits department\nAhmed Al-Mansour • 06 Feb 2026, 10:00' },
   ];
 
+  scrollTabs(el: HTMLElement) {
+    el.scrollBy({ left: 120, behavior: 'smooth' });
+  }
+
   ngOnInit() {
     this.requestId = this.route.snapshot.paramMap.get('id') ?? '';
     console.log('Request ID:', this.requestId);

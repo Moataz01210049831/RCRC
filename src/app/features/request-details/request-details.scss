@@ -100,20 +100,51 @@
   }
 
   // ── Tabs ─────────────────────────────────────────────
+  &__tabs-wrap {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+
+  &__tabs-arrow {
+    display: none;
+    flex-shrink: 0;
+    background: var(--color-bg-subtle);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 6px 4px;
+    color: var(--color-text-muted);
+
+    .material-icons { font-size: 18px; display: block; }
+
+    @media (max-width: 768px) { display: flex; align-items: center; }
+  }
+
   &__tabs {
     display: flex;
     gap: 2px;
     background: var(--color-bg-subtle);
     border-radius: 8px;
     padding: 4px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
+    flex: 1;
 
     @media (max-width: 768px) {
-      flex-direction: column;
-      border-radius: 8px;
-      gap: 2px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      &::-webkit-scrollbar { display: none; }
     }
+  }
+
+  // Required Info: table on desktop, field rows on mobile
+  &__required-table {
+    @media (max-width: 768px) { display: none; }
+  }
+
+  &__required-fields {
+    display: none;
+    @media (max-width: 768px) { display: block; }
   }
 
   &__tab {
