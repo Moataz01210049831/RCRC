@@ -59,6 +59,8 @@ $nav-collapsed-width: 64px;
     cursor: pointer;
     color: #555;
 
+    @media (max-width: 768px) { display: none; }
+
     &:hover {
       color: var(--color-primary);
     }
