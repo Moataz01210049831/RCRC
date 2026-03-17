@@ -16,6 +16,21 @@ $nav-collapsed-width: 64px;
   transition: width 0.25s ease;
   overflow: hidden;
 
+  // ── Triangle decoration ───────────────────────────────
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 160px;
+    height: 160px;
+    pointer-events: none;
+    background-image: url('/images/background.png');
+    background-repeat: no-repeat;
+    background-size: 160px 160px;
+    opacity: 0.3;
+  }
+
   &--collapsed {
     width: $nav-collapsed-width;
 
