@@ -18,7 +18,7 @@ export class RequestDetails implements OnInit {
   private route = inject(ActivatedRoute);
 
   requestId = '';
-  status = 'Resolved';
+  status = 'Awaiting Info';
   sheetOpen    = signal(true);
   updateModalOpen = signal(false);
   updateNotes = '';
