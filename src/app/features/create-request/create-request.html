@@ -17,7 +17,9 @@
       @for (step of steps; track step.number) {
         <div class="cr__step" [class.cr__step--active]="currentStep() === step.number" [class.cr__step--done]="currentStep() > step.number">
           <span class="cr__step-number">{{ currentStep() > step.number ? '✓' : step.number }}</span>
-          <span class="cr__step-text">{{ step.label }}</span>
+          <span class="cr__step-text">
+            <span class="cr__step-num-prefix">{{ step.number }}. </span>{{ step.label }}
+          </span>
         </div>
       }
     </aside>
