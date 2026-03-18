@@ -1,0 +1,185 @@
+
+## ✅ Completed Tasks
+
+### 1. Project Foundation
+- Set up Angular 20 standalone app with Bootstrap grid system
+- Defined global CSS design tokens (colors, spacing, borders) in `:root`
+- Configured route-based lazy loading for all feature pages
+- Added `authGuard` to protect all routes behind authentication
+- Updated Angular build budgets for component stylesheets
+
+---
+
+### 2. Authentication
+- Built **Login page** with Nafath Login
+- Login page background styling and responsive layout
+- Login page footer with language selector and organization logo
+- Auth guard redirects unauthenticated users to `/login`
+
+---
+
+### 3. Layout & Navigation
+- Built **Layout shell** with sidenav + main content area
+- **Sidenav** features:
+  - Collapsed / expanded toggle with smooth animation
+  - Icons-only collapsed state on desktop
+  - User avatar, full name display
+  - Contact info section (phone, mobile, email) with collapse/expand toggle
+  - Navigation links: Dashboard, Requests, FAQs
+  - Language switcher (EN / AR pill button)
+  - Organization logo and footer links at bottom
+  - Background decorative image
+- **Mobile Navigation:**
+  - Sidenav fully hidden on mobile (width 0)
+  - Hamburger button in top bar opens/closes full sidenav with animation
+  - Backdrop overlay closes sidenav on tap
+  - Sidenav toggle button hidden on mobile
+
+---
+
+### 4. Dashboard Page
+- **Stats Header** — three stat cards: Active Requests, Awaiting Info, Closed
+- **New Request button** navigates to Create Request page
+- **Recent Updates table** showing latest requests
+- Stats and recent updates share the same white card container
+- Full viewport height layout
+
+---
+
+### 5. Requests Page
+- **Tab switcher** — All / Active Requests / Closed
+- **Search** input with icon
+- **Filter** button
+- **Collapsible groups** — Active Requests and Closed sections with expand/collapse
+- **Count badge** shown when a group is collapsed
+- Full viewport height white card layout
+
+---
+
+### 6. Create New Request Page (4-Step Stepper)
+- **Step indicator** at top (horizontal on desktop, compact on mobile)
+- **Step 1 — Customer Details:**
+  - Radio card to use saved profile (auto-fills all fields on select)
+  - Manual entry: Name, Email, Phone (+966 prefix), ID Type, ID Number
+  - Default state: no saved profile selected
+- **Step 2 — Request Details:**
+  - Category, Sector, Department, Service dropdowns
+  - Request Title input
+  - Description textarea
+- **Step 3 — Documents:**
+  - Uses shared FileUpload component
+  - Drag & drop or browse to upload (PDF, JPEG, PNG up to 5MB)
+  - Uploaded file list with remove option
+  - Submit button navigates to Step 4 and logs form data to console
+- **Step 4 — Summary:**
+  - Success confirmation with double-check icon
+  - Displays Request Number, Request Type, Customer Name
+  - "View Requests" link and "Create Another Request" button (resets form)
+- **Back button** on steps 2 and 3 (no Back on Step 4)
+- Fully responsive — steps stack vertically on mobile
+
+---
+
+### 7. Request Details Page (`/request-details/:id`)
+- **Header:** Back link, status badges (e.g. In Progress, Awaiting Info), Request number title
+- **Tabs:** Required Info / Consultant Info / Landlord Info / Project Land Info / Attachments
+  - Desktop: horizontal segmented control tabs
+  - Mobile: horizontally scrollable tabs with arrow button
+- **Required Info tab:**
+  - Desktop: data table (Sector, Department, Service, Description)
+  - Mobile: key-value field rows
+- **Consultant Info, Landlord Info, Project Land Info tabs:** key-value field rows
+- **Attachments tab:** file list with download button
+- **Request Updates section:** collapsible cards per reviewer (Approved status shown)
+- **Customer sidebar:** avatar, name, phone
+- **Timeline sidebar:** clock icon, vertical connecting line through dots, Ticket Created / Assigned to Department entries
+- **Action Sheet** (sticky to bottom of page):
+  - `Awaiting Info` status: "Update the request" + "Cancel the request" buttons
+  - `Resolved` status: "Agree" + "Disagree" buttons
+- **Update Request Modal** (on "Update the request"):
+  - Shared FileUpload component for attachments
+  - Notes textarea
+  - Logs files + notes to console on submit
+- **Agree Modal** (on "Agree"):
+  - Star rating (1–5) with labels
+  - Comment textarea (optional)
+  - Logs rating + comment to console on confirm
+- **Disagree Modal** (on "Disagree"):
+  - Star rating (1–5)
+  - Reason for disagreement textarea
+  - Logs rating + reason to console on submit
+- Route reads `:id` param and logs it to console on load
+- Full viewport height white card layout
+
+---
+
+### 8. Shared Components
+| Component | Description |
+|---|---|
+| `DataTable` | Dynamic columns & data — supports link, badge, tag, star, text cell types. Scrollable mode. Mobile card layout. |
+| `FileUpload` | Modal with drag & drop zone, file list with remove, accepts configurable file types. Used in Create Request and Request Details. |
+
+---
+
+### 9. Responsive Design
+- All pages tested and adjusted for mobile (`≤ 768px`)
+- DataTable switches from table to card layout on mobile
+- Sidenav becomes a full-overlay drawer on mobile
+- Stats header stacks vertically on mobile
+- Create Request steps display horizontally scrollable on mobile
+- Request Details tabs scrollable on mobile, table becomes field rows
+- Action sheet buttons become full-width stacked on mobile
+
+---
+
+## ❌ Not Completed — Pending API Integration
+
+### 1. Auth Service
+- Connect login form to `POST /auth/login` API
+- Store and manage JWT token
+- Wire `authGuard` to validate real token
+- Implement `logout()` with token cleanup
+
+### 2. Dashboard Service
+- Fetch stats counts from `GET /dashboard/stats`
+- Fetch recent updates list from `GET /dashboard/recent-updates`
+- Replace hardcoded data in stats-header and recent-updates components
+
+### 3. Requests Service
+- Fetch active requests from `GET /requests?status=active`
+- Fetch closed requests from `GET /requests?status=closed`
+- Implement search via `GET /requests?search=query`
+- Replace hardcoded request arrays in requests page
+
+### 4. Request Details Service
+- Fetch full request data from `GET /requests/:id`
+- Submit update (files + notes) to `POST /requests/:id/update`
+- Submit agreement to `POST /requests/:id/agree`
+- Submit review request to `POST /requests/:id/disagree`
+- Submit cancellation to `POST /requests/:id/cancel`
+- Replace all hardcoded status, tab data, updates, and timeline
+
+### 5. Create Request Service
+- Load saved customer profile from `GET /profile`
+- Submit new request to `POST /requests` (multipart/form-data)
+- Return real request number from API to display in Summary step
+
+### 6. File Upload Service
+- Upload files to `POST /uploads` and receive file IDs
+- Replace raw `File` objects with API file IDs in all submissions
+
+### 7. Language / i18n Service
+- Implement EN / AR language switching
+- Apply `dir="rtl"` to `<html>` when Arabic is selected
+- Persist language preference in `localStorage`
+- Connect language switcher in sidenav and login footer to service
+
+### 8. HTTP Interceptor
+- Attach `Authorization: Bearer <token>` to all outgoing requests
+- Handle `401 Unauthorized` — redirect to login
+- Handle `500 Server Error` — display user-facing error notification
+
+### 9. Environment Configuration
+- Create `environment.ts` with dev API base URL
+- Create `environment.prod.ts` with production API base URL
+- Wire all services to use environment config
