@@ -34,12 +34,27 @@ export class CreateRequest {
     idNumber: '1234567890',
   };
 
-  // Customer form fields
+  // Beneficiary type — set from login API response stored in localStorage
+  beneficiaryType: 'individual' | 'legal' = (() => {
+    const user = localStorage.getItem('user');
+    if (!user) return 'individual';
+    const parsed = JSON.parse(user);
+    return parsed.beneficiaryType === 'legal' ? 'legal' : 'individual';
+  })();
+
+// Individual fields
   customerName = '';
   email = '';
   phone = '';
   idType = '';
   idNumber = '';
+
+  // Legal Entity fields
+  companyName = '';
+  crNumber = '';
+  vatNumber = '';
+  authorizedName = '';
+  authorizedPhone = '';
 
   // Address fields
   shortAddress = '';

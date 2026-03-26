@@ -30,56 +30,96 @@
       <!-- Step 1: Customer Details -->
       @if (currentStep() === 1) {
         <h2 class="cr__section-title">Customer details</h2>
-        <p class="cr__section-sub">Would you like to use your saved personal details, or enter new details?</p>
 
-        <!-- Saved Profile Option -->
-        <label class="cr__saved-card" [class.cr__saved-card--selected]="useSaved()">
-          <input type="radio" name="profileChoice" [value]="true" [(ngModel)]="useSaved" class="cr__radio" (ngModelChange)="onUseSavedChange()" />
-          <div class="cr__saved-info">
-            <p class="cr__saved-name">Alanood Abdullah</p>
-            <p class="cr__saved-detail">Email&#64;email.com</p>
-            <p class="cr__saved-detail">+966 50 123 4567</p>
-            <p class="cr__saved-detail">NIC: 1234567890</p>
-          </div>
-        </label>
+        <!-- ── Individual fields ───────────────────────── -->
+        @if (beneficiaryType === 'individual') {
+          <p class="cr__section-sub">Would you like to use your saved personal details, or enter new details?</p>
 
-        <p class="cr__or">Or</p>
+          <label class="cr__saved-card" [class.cr__saved-card--selected]="useSaved()">
+            <input type="radio" name="profileChoice" [value]="true" [(ngModel)]="useSaved" class="cr__radio" (ngModelChange)="onUseSavedChange()" />
+            <div class="cr__saved-info">
+              <p class="cr__saved-name">Alanood Abdullah</p>
+              <p class="cr__saved-detail">Email&#64;email.com</p>
+              <p class="cr__saved-detail">+966 50 123 4567</p>
+              <p class="cr__saved-detail">NIC: 1234567890</p>
+            </div>
+          </label>
 
-        <!-- Manual Entry -->
-        <div class="cr__field">
-          <label class="cr__label">Customer Name</label>
-          <input class="cr__input" type="text" placeholder="Enter customer name" [(ngModel)]="customerName" name="customerName" />
-        </div>
+          <p class="cr__or">Or</p>
 
-        <div class="cr__row">
           <div class="cr__field">
-            <label class="cr__label">Email</label>
-            <input class="cr__input" type="email" placeholder="customer@example.com" [(ngModel)]="email" name="email" />
+            <label class="cr__label">Full Name</label>
+            <input class="cr__input" type="text" placeholder="Enter full name" [(ngModel)]="customerName" name="customerName" />
           </div>
-          <div class="cr__field cr__field--phone">
-            <label class="cr__label">Phone</label>
-            <div class="cr__phone-group">
-              <span class="cr__phone-prefix">+966</span>
-              <input class="cr__input cr__input--phone" type="tel" placeholder="50 123 4567" [(ngModel)]="phone" name="phone" />
+
+          <div class="cr__row">
+            <div class="cr__field">
+              <label class="cr__label">Email</label>
+              <input class="cr__input" type="email" placeholder="customer@example.com" [(ngModel)]="email" name="email" />
+            </div>
+            <div class="cr__field cr__field--phone">
+              <label class="cr__label">Phone</label>
+              <div class="cr__phone-group">
+                <span class="cr__phone-prefix">+966</span>
+                <input class="cr__input cr__input--phone" type="tel" placeholder="50 123 4567" [(ngModel)]="phone" name="phone" />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="cr__row">
-          <div class="cr__field">
-            <label class="cr__label">ID Type</label>
-            <select class="cr__input cr__select" [(ngModel)]="idType" name="idType">
-              <option value="">Select</option>
-              <option value="national">National ID</option>
-              <option value="passport">Passport</option>
-              <option value="iqama">Iqama</option>
-            </select>
+          <div class="cr__row">
+            <div class="cr__field">
+              <label class="cr__label">ID Type</label>
+              <select class="cr__input cr__select" [(ngModel)]="idType" name="idType">
+                <option value="">Select</option>
+                <option value="national">National ID</option>
+                <option value="passport">Passport</option>
+                <option value="iqama">Iqama</option>
+              </select>
+            </div>
+            <div class="cr__field">
+              <label class="cr__label">ID Number</label>
+              <input class="cr__input" type="text" placeholder="1234567890" [(ngModel)]="idNumber" name="idNumber" />
+            </div>
           </div>
+        }
+
+        <!-- ── Legal Entity fields ────────────────────── -->
+        @if (beneficiaryType === 'legal') {
           <div class="cr__field">
-            <label class="cr__label">ID number</label>
-            <input class="cr__input" type="text" placeholder="1234567890" [(ngModel)]="idNumber" name="idNumber" />
+            <label class="cr__label">Company Name</label>
+            <input class="cr__input" type="text" placeholder="Enter company name" [(ngModel)]="companyName" name="companyName" />
           </div>
-        </div>
+
+          <div class="cr__row">
+            <div class="cr__field">
+              <label class="cr__label">CR Number</label>
+              <input class="cr__input" type="text" placeholder="e.g. 1010123456" [(ngModel)]="crNumber" name="crNumber" />
+            </div>
+            <div class="cr__field">
+              <label class="cr__label">VAT Number <span class="cr__optional">(Optional)</span></label>
+              <input class="cr__input" type="text" placeholder="e.g. 300012345600003" [(ngModel)]="vatNumber" name="vatNumber" />
+            </div>
+          </div>
+
+          <div class="cr__field">
+            <label class="cr__label">Authorized Person Name</label>
+            <input class="cr__input" type="text" placeholder="Enter authorized person name" [(ngModel)]="authorizedName" name="authorizedName" />
+          </div>
+
+          <div class="cr__row">
+            <div class="cr__field cr__field--phone">
+              <label class="cr__label">Authorized Person Phone</label>
+              <div class="cr__phone-group">
+                <span class="cr__phone-prefix">+966</span>
+                <input class="cr__input cr__input--phone" type="tel" placeholder="50 123 4567" [(ngModel)]="authorizedPhone" name="authorizedPhone" />
+              </div>
+            </div>
+            <div class="cr__field">
+              <label class="cr__label">Email</label>
+              <input class="cr__input" type="email" placeholder="company@example.com" [(ngModel)]="email" name="legalEmail" />
+            </div>
+          </div>
+        }
 
         <!-- Address Section -->
         <h3 class="cr__section-sub cr__section-sub--divider">Address</h3>
