@@ -80,6 +80,44 @@
             <input class="cr__input" type="text" placeholder="1234567890" [(ngModel)]="idNumber" name="idNumber" />
           </div>
         </div>
+
+        <!-- Address Section -->
+        <h3 class="cr__section-sub cr__section-sub--divider">Address</h3>
+
+        <div class="cr__row">
+          <div class="cr__field cr__field--address">
+            <label class="cr__label cr__label--required">Short Address <span class="cr__required">*</span></label>
+            <div class="cr__address-group">
+              <input
+                class="cr__input"
+                type="text"
+                placeholder="e.g. RRMD2929"
+                [(ngModel)]="shortAddress"
+                name="shortAddress"
+                [class.cr__input--verified]="addressVerified"
+              />
+              <button class="cr__address-verify" type="button" (click)="verifyAddress()">
+                <span class="material-icons">verified</span>
+                Verify via SPL
+              </button>
+            </div>
+          </div>
+          <div class="cr__field">
+            <label class="cr__label">City</label>
+            <input class="cr__input" type="text" placeholder="e.g. Riyadh" [(ngModel)]="city" name="city" [disabled]="addressVerified" />
+          </div>
+        </div>
+
+        <div class="cr__row">
+          <div class="cr__field">
+            <label class="cr__label">District</label>
+            <input class="cr__input" type="text" placeholder="e.g. Al-Malaz" [(ngModel)]="district" name="district" [disabled]="addressVerified" />
+          </div>
+          <div class="cr__field">
+            <label class="cr__label">Postal Code</label>
+            <input class="cr__input" type="text" placeholder="e.g. 12345" [(ngModel)]="postalCode" name="postalCode" [disabled]="addressVerified" />
+          </div>
+        </div>
       }
 
       <!-- Step 2: Request Details -->

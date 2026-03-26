@@ -198,6 +198,64 @@
     margin: 0 0 24px;
   }
 
+  // ── Address ──────────────────────────────────────────
+  &__section-sub--divider {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin: 20px 0 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  &__address-group {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+
+    .cr__input { flex: 1; }
+
+    @media (max-width: 480px) { flex-direction: column; }
+  }
+
+  &__address-verify {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 14px;
+    background: #e8f4fd;
+    color: #1565c0;
+    border: 1px solid #90caf9;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+
+    .material-icons { font-size: 15px; }
+    &:hover { background: #d0eafb; }
+
+    @media (max-width: 480px) { width: 100%; justify-content: center; padding: 10px; }
+  }
+
+  &__input--verified {
+    border-color: var(--color-primary) !important;
+    background: #f0faf5;
+  }
+
+  &__input:disabled {
+    background: var(--color-bg-subtle);
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+    border-color: var(--color-border);
+  }
+
+  &__label--required { display: flex; gap: 4px; }
+  &__required { color: #e53935; }
+
   // ── Saved Card ───────────────────────────────────────
   &__saved-card {
     display: flex;

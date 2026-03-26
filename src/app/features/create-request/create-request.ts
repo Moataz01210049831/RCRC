@@ -41,6 +41,23 @@ export class CreateRequest {
   idType = '';
   idNumber = '';
 
+  // Address fields
+  shortAddress = '';
+  city = '';
+  district = '';
+  postalCode = '';
+  addressVerified = false;
+
+  verifyAddress() {
+    if (!this.shortAddress.trim()) return;
+    // TODO: connect to SPL API
+    console.log('Verify address:', this.shortAddress);
+    this.city        = 'Riyadh';
+    this.district    = 'Al-Malaz';
+    this.postalCode  = '12345';
+    this.addressVerified = true;
+  }
+
   onUseSavedChange() {
     if (this.useSaved()) {
       this.customerName = this.savedProfile.customerName;
