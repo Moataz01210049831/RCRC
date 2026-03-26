@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from '../../core/auth';
+import { NafathService } from '../../core/services/nafath.service';
 
 @Component({
   selector: 'app-login',
@@ -10,24 +11,35 @@ import { Auth } from '../../core/auth';
   styleUrl: './login.scss',
 })
 export class Login {
-  username = 'nafath';
-  password = '123456';
-  error = signal('');
-  showPassword = signal(false);
-  lang      = signal('EN');
-  langOpen  = signal(false);
+  error   = signal('');
+  loading = signal(false);
+  lang    = signal('EN');
+  langOpen = signal(false);
+
   toggleLang() { this.langOpen.update(v => !v); }
   setLang(l: string) { this.lang.set(l); this.langOpen.set(false); }
 
-  constructor(private auth: Auth, private router: Router) {}
+  constructor(
+    private auth: Auth,
+    private nafath: NafathService,
+    private router: Router,
+  ) {}
 
-  onSubmit() {
-   
-    const success = this.auth.login(this.username, this.password);
-    if (success) {
-      this.router.navigate(['/dashboard']);
-    } else {
-      this.error.set('Invalid credentials. Please try again.');
-    }
+  onNafathLogin() {
+    this.error.set('');
+    this.loading.set(true);
+
+    this.nafath.loginWithNafath().subscribe({
+      next: (user) => {
+        this.loading.set(false);
+        // Mark session as authenticated in the existing auth guard
+        this.auth.login(user.nationalId, user.token);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.loading.set(false);
+        this.error.set(err?.error?.message ?? 'Nafath login failed. Please try again.');
+      },
+    });
   }
 }

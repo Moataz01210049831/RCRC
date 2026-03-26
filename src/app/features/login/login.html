@@ -17,48 +17,19 @@
       </div>
     }
 
-    <form class="login-card__form" (ngSubmit)="onSubmit()">
-
-      <!-- Username -->
-      <!-- <div class="login-card__field">
-        <label class="login-card__label" for="username">Username</label>
-        <input
-          id="username"
-          class="login-card__input"
-          type="text"
-          placeholder="Enter your username"
-          [(ngModel)]="username"
-          name="username"
-          autocomplete="username"
-        />
-      </div> -->
-
-      <!-- Password -->
-      <!-- <div class="login-card__field">
-        <label class="login-card__label" for="password">Password</label>
-        <div class="login-card__input-wrap">
-          <input
-            id="password"
-            class="login-card__input"
-            [type]="showPassword() ? 'text' : 'password'"
-            placeholder="Enter your password"
-            [(ngModel)]="password"
-            name="password"
-            autocomplete="current-password"
-          />
-          <button
-            type="button"
-            class="login-card__eye"
-            (click)="showPassword.set(!showPassword())"
-          >
-            <span class="material-icons">{{ showPassword() ? 'visibility_off' : 'visibility' }}</span>
-          </button>
-        </div>
-      </div> -->
-
-      <button type="submit" class="login-card__submit">Sign In with NAFATH</button>
-
-    </form>
+    <button
+      type="button"
+      class="login-card__submit"
+      [disabled]="loading()"
+      (click)="onNafathLogin()"
+    >
+      @if (loading()) {
+        <span class="material-icons login-card__spinner">sync</span>
+        Connecting…
+      } @else {
+        Sign In with NAFATH
+      }
+    </button>
   </div>
 
   <!-- Footer -->

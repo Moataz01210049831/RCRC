@@ -1,3 +1,5 @@
+@keyframes spin { to { transform: rotate(360deg); } }
+
 .login-page {
   min-height: 100vh;
   display: flex;
@@ -258,11 +260,24 @@
     &:hover { color: #555; }
   }
 
+  &__spinner {
+    font-size: 18px;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+
   &__submit {
     width: 100%;
     padding: 12px;
     background-color: var(--color-primary);
     color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    &:disabled { opacity: 0.7; cursor: not-allowed; }
     border: none;
     border-radius: 8px;
     font-size: 15px;
