@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { DataTable, TableColumn, TableRow } from '../../../../shared/data-table/data-table';
 
 @Component({
   selector: 'app-recent-updates',
-  imports: [DataTable],
+  imports: [DataTable, RouterLink],
   templateUrl: './recent-updates.html',
   styleUrl: './recent-updates.scss',
 })
