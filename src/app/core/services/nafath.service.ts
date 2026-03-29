@@ -23,6 +23,7 @@ interface LoginApiResponse {
       IdentityNumber: string;
       IdentityTypeId: number;
       Email:          string;
+      EntityId:       string;
     };
   };
 }
@@ -36,6 +37,7 @@ export interface NafathUser {
   phone:           string;
   nationalId:      string;
   identityTypeId:  number;
+  EntityId:        string;
   roles:           string[];
   token:           string;
   beneficiaryType: 'individual' | 'legal';
@@ -59,6 +61,7 @@ const MOCK_RESPONSE: LoginApiResponse = {
       IdentityNumber: '2044700181',
       IdentityTypeId: 2,
       Email:          'anas.h@2p.com.sa',
+      EntityId:       'entity-id-123',
     },
   },
 };
@@ -113,6 +116,7 @@ export class NafathService {
       identityTypeId:  d.Contact.IdentityTypeId,
       roles:           d.Roles,
       token:           d.JWToken,
+      EntityId:         d.Contact.EntityId,
       beneficiaryType: 'individual',   // update when API returns this field
     };
   }

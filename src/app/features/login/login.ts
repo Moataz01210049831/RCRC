@@ -29,7 +29,7 @@ export class Login {
     this.error.set('');
     this.loading.set(true);
 
-    this.nafath.loginWithNafath('Agent', 'Aa@12345').subscribe({
+    this.nafath.loginWithNafath('test', 'Aa@12345').subscribe({
       next: (user) => {
         this.loading.set(false);
         this.auth.login(user.userName, user.token);
