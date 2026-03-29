@@ -39,10 +39,10 @@
             <input type="radio" name="profileChoice" [value]="true" [checked]="useSaved()"
                    (change)="useSaved.set(true); onUseSavedChange()" class="cr__radio" />
             <div class="cr__saved-info">
-              <p class="cr__saved-name">Alanood Abdullah</p>
-              <p class="cr__saved-detail">Email&#64;email.com</p>
-              <p class="cr__saved-detail">+966 50 123 4567</p>
-              <p class="cr__saved-detail">NIC: 1234567890</p>
+              <p class="cr__saved-name">{{ storedUser.name }}</p>
+              <p class="cr__saved-detail">{{ storedUser.email }}</p>
+              <p class="cr__saved-detail">+966 {{ storedUser.phone }}</p>
+              <p class="cr__saved-detail">NIC: {{ storedUser.nationalId }}</p>
             </div>
           </label>
 

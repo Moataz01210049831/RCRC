@@ -3,6 +3,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { RouterLink } from '@angular/router';
 import { FileUpload, UploadedFile } from '../../shared/file-upload/file-upload';
 import { RequestsService } from '../../core/services/requests.service';
+import { NafathUser } from '../../core/models/nafath-user.model';
 
 export interface Step {
   number: number;
@@ -29,21 +30,18 @@ export class CreateRequest {
 
   useSaved = signal<boolean>(false);
 
+  readonly storedUser: NafathUser = JSON.parse(localStorage.getItem('user') ?? '{}');
+
   private readonly savedProfile = {
-    customerName: 'Alanood Abdullah',
-    email: 'Email@email.com',
-    phone: '50 123 4567',
-    idType: 'national',
-    idNumber: '1234567890',
+    customerName: this.storedUser.name        ?? '',
+    email:        this.storedUser.email       ?? '',
+    phone:        this.storedUser.phone       ?? '',
+    idType:       this.storedUser.identityTypeId === 1 ? 'national' : 'iqama',
+    idNumber:     this.storedUser.nationalId  ?? '',
   };
 
   // Beneficiary type — set from login API response stored in localStorage
-  beneficiaryType: 'individual' | 'legal' = (() => {
-    const user = localStorage.getItem('user');
-    if (!user) return 'individual';
-    const parsed = JSON.parse(user);
-    return parsed.beneficiaryType === 'legal' ? 'legal' : 'individual';
-  })();
+  beneficiaryType: 'individual' | 'legal' = this.storedUser.beneficiaryType === 'legal' ? 'legal' : 'individual';
 
   form = new FormGroup({
     // Individual fields
