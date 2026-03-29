@@ -11,9 +11,9 @@ import { NafathService } from '../../core/services/nafath.service';
   styleUrl: './login.scss',
 })
 export class Login {
-  error   = signal('');
-  loading = signal(false);
-  lang    = signal('EN');
+  error    = signal('');
+  loading  = signal(false);
+  lang     = signal('EN');
   langOpen = signal(false);
 
   toggleLang() { this.langOpen.update(v => !v); }
@@ -29,16 +29,15 @@ export class Login {
     this.error.set('');
     this.loading.set(true);
 
-    this.nafath.loginWithNafath().subscribe({
+    this.nafath.loginWithNafath('Agent', 'Aa@12345').subscribe({
       next: (user) => {
         this.loading.set(false);
-        // Mark session as authenticated in the existing auth guard
-        this.auth.login(user.nationalId, user.token);
+        this.auth.login(user.userName, user.token);
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         this.loading.set(false);
-        this.error.set(err?.error?.message ?? 'Nafath login failed. Please try again.');
+        this.error.set(err?.error?.Message ?? 'Login failed. Please try again.');
       },
     });
   }

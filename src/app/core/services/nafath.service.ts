@@ -1,29 +1,66 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
+// ── API response shape ────────────────────────────────
+interface LoginApiResponse {
+  Success: boolean;
+  Message: string;
+  Data: {
+    Id:         string;
+    UserName:   string;
+    Email:      string;
+    Roles:      string[];
+    JWToken:    string;
+    Contact: {
+      FirstName:      string;
+      LastName:       string;
+      FullName:       string;
+      MobileNumber:   string;
+      IdentityNumber: string;
+      IdentityTypeId: number;
+      Email:          string;
+    };
+  };
+}
+
+// ── Normalised user stored in app ─────────────────────
 export interface NafathUser {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  nationalId: string;
-  token: string;
+  id:              string;
+  userName:        string;
+  name:            string;
+  email:           string;
+  phone:           string;
+  nationalId:      string;
+  identityTypeId:  number;
+  roles:           string[];
+  token:           string;
   beneficiaryType: 'individual' | 'legal';
 }
 
-// ── Mock response — remove when real API is ready ────
-const MOCK_USER: NafathUser = {
-  id:              'USR-001',
-  name:            'Abdulaziz Al-Abdullah',
-  email:           'a.abdullah@rcrc.gov.sa',
-  phone:           '0550000005',
-  nationalId:      '1023456789',
-  token:           'mock-jwt-token-abc123',
-  beneficiaryType: 'legal',   // change to 'legal' to test Legal Entity flow
+// ── Mock — mirrors real API shape ─────────────────────
+const MOCK_RESPONSE: LoginApiResponse = {
+  Success: true,
+  Message: 'Login Success',
+  Data: {
+    Id:       '72e99974-1029-f111-93f7-005056898a24',
+    UserName: 'agent',
+    Email:    'anas.h@2p.com.sa',
+    Roles:    ['agent'],
+    JWToken:  'mock-jwt-token-abc123',
+    Contact: {
+      FirstName:      'Anas',
+      LastName:       'Suleiman',
+      FullName:       'Anas Suleiman',
+      MobileNumber:   '0557334554',
+      IdentityNumber: '2044700181',
+      IdentityTypeId: 2,
+      Email:          'anas.h@2p.com.sa',
+    },
+  },
 };
 // ─────────────────────────────────────────────────────
 
@@ -37,27 +74,47 @@ export class NafathService {
 
   constructor(private http: HttpClient) {}
 
-  loginWithNafath() {
+  loginWithNafath(userName = 'Agent', password = 'Aa@12345') {
     this.loading.set(true);
 
     const request$ = this.useMock
-      ? of(MOCK_USER).pipe(delay(800))          // simulate network delay
-      : this.http.post<NafathUser>(`${this.baseUrl}/auth/nafath/login`, {});
+      ? of(MOCK_RESPONSE).pipe(delay(800))
+      : this.http.post<LoginApiResponse>(
+          `${this.baseUrl}/Accounts/Login`,
+          { UserName: userName, Password: password },
+        );
 
     return request$.pipe(
-        tap((res) => {
-          this.loading.set(false);
-          this.user.set(res);
-          localStorage.setItem('token', res.token);
-          localStorage.setItem('user', JSON.stringify(res));
-          console.log('Nafath login success:', res);
-        }),
-        catchError((err) => {
-          this.loading.set(false);
-          console.error('Nafath login error:', err);
-          return throwError(() => err);
-        }),
-      );
+      map((res) => this.mapUser(res)),
+      tap((user) => {
+        this.loading.set(false);
+        this.user.set(user);
+        localStorage.setItem('token', user.token);
+        localStorage.setItem('user', JSON.stringify(user));
+        console.log('Login success:', user);
+      }),
+      catchError((err) => {
+        this.loading.set(false);
+        console.error('Login error:', err);
+        return throwError(() => err);
+      }),
+    );
+  }
+
+  private mapUser(res: LoginApiResponse): NafathUser {
+    const d = res.Data;
+    return {
+      id:              d.Id,
+      userName:        d.UserName,
+      name:            d.Contact.FullName  || `${d.Contact.FirstName} ${d.Contact.LastName}`,
+      email:           d.Contact.Email     || d.Email,
+      phone:           d.Contact.MobileNumber,
+      nationalId:      d.Contact.IdentityNumber,
+      identityTypeId:  d.Contact.IdentityTypeId,
+      roles:           d.Roles,
+      token:           d.JWToken,
+      beneficiaryType: 'individual',   // update when API returns this field
+    };
   }
 
   getStoredUser(): NafathUser | null {
