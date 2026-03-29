@@ -96,7 +96,7 @@
               <input class="cr__input" type="text" placeholder="e.g. 1010123456" [(ngModel)]="crNumber" name="crNumber" />
             </div>
             <div class="cr__field">
-              <label class="cr__label">VAT Number <span class="cr__optional">(Optional)</span></label>
+              <label class="cr__label cr__label--no-required">VAT Number <span class="cr__optional">(Optional)</span></label>
               <input class="cr__input" type="text" placeholder="e.g. 300012345600003" [(ngModel)]="vatNumber" name="vatNumber" />
             </div>
           </div>
@@ -126,7 +126,7 @@
 
         <div class="cr__row">
           <div class="cr__field cr__field--address">
-            <label class="cr__label cr__label--required">Short Address <span class="cr__required">*</span></label>
+            <label class="cr__label">Short Address</label>
             <div class="cr__address-group">
               <input
                 class="cr__input"

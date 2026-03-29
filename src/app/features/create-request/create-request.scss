@@ -293,6 +293,14 @@
     &:hover:not(&--active) { border-color: var(--color-primary); color: var(--color-primary); }
   }
 
+  &__label::after {
+    content: ' *';
+    color: #e53935;
+  }
+
+  // Labels that are NOT required — suppress the asterisk
+  &__label--no-required::after { content: none; }
+
   &__optional {
     font-size: 11px;
     font-weight: 400;
