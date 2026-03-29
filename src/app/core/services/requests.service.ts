@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { RequestsApiResponse, RequestItem } from '../models/request.model';
+import { RequestsApiResponse, RequestItem, AddComplainRequest } from '../models/request.model';
 
 @Injectable({ providedIn: 'root' })
 export class RequestsService {
@@ -45,6 +45,49 @@ export class RequestsService {
           return throwError(() => err);
         }),
       );
+  }
+
+  addRequest(model: AddComplainRequest, caseType = 100000005) {
+    const fileFormData = new FormData();
+
+    const complain = {
+      Title:                    model.Title,
+      InteractionId:            model.InteractionId,
+      ContactId:                model.ContactId,
+      OnBehalfContactId:        model.OnBehalfContactId,
+      CityId:                   model.CityId,
+      ContactSourceId:          model.ContactSourceId,
+      Description:              model.Description,
+      SectorId:                 model.SectorId,
+      IsUrgent:                 model.IsUrgent,
+      DivisionId:               model.DivisionId,
+      DivisionTypeId:           model.DivisionTypeId,
+      CaseMainClassificationId: model.CaseSubClassificationId,
+      CaseSubClassificationId:  model.CaseSubClassificationId,
+      QuestionId:               model.QuestionId,
+      ComplainQuestions:        model.ComplainQuestions,
+      IsSecret:                 model.IsSecret,
+      IsAttached:               model.IsAttached,
+      DivisionName:             model.DivisionName,
+      mediaEmail:               model.mediaEmail,
+      mediaUserName:            model.mediaUserName,
+      SubServiceId:             model.SubServiceId,
+      MedicalFile:              model.MedicalFile,
+      MobileNumber:             model.MobileNumber,
+      ServiceId:                model.service,
+    };
+
+    fileFormData.append('complainViewModel', JSON.stringify(complain));
+
+    for (let i = 0; i < (model.attachmentArr?.length ?? 0); i++) {
+      fileFormData.append(`HttpPostedFile${i}`, model.attachmentArr[i].file);
+      fileFormData.append('FileDescription', model.attachmentArr[i].dis);
+    }
+
+    return this.http.post<any>(
+      `${this.baseUrl}/Complain/AddComplains?caseType=${caseType}`,
+      fileFormData,
+    );
   }
 
   private getStoredUser(): { EntityId: string } | null {

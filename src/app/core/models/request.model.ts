@@ -1,3 +1,33 @@
+export interface AddComplainRequest {
+  Title:                    string;
+  InteractionId:            string;
+  ContactId:                string;
+  OnBehalfContactId:        string;
+  CityId:                   string;
+  ContactSourceId:          string;
+  Description:              string;
+  SectorId:                 string;
+  IsUrgent:                 boolean;
+  DivisionId:               string;
+  DivisionTypeId:           string;
+  CaseMainClassificationId: string;
+  CaseSubClassificationId:  string;
+  QuestionId:               string;
+  ComplainQuestions:        Record<string, unknown>;
+  IsSecret:                 boolean;
+  IsAttached:               boolean;
+  DivisionName:             string;
+  mediaEmail:               string;
+  mediaUserName:            string;
+  SubServiceId:             string;
+  MedicalFile:              string;
+  MobileNumber:             string;
+  service:                  string;
+  uomra:                    boolean;
+  authorityId:              string;
+  attachmentArr:            { file: File; dis: string }[];
+}
+
 export interface RequestsApiResponse {
   Success:    boolean;
   Message:    string;

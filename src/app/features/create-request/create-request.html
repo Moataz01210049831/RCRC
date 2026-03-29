@@ -282,7 +282,9 @@
       <button class="cr__btn cr__btn--secondary" (click)="back()">Back</button>
     }
     @if (currentStep() === 3) {
-      <button class="cr__btn cr__btn--primary" (click)="submit()">Submit</button>
+      <button class="cr__btn cr__btn--primary" (click)="submit()" [disabled]="submitting()">
+        {{ submitting() ? 'Submitting...' : 'Submit' }}
+      </button>
     } @else if (currentStep() < 4) {
       <button class="cr__btn cr__btn--primary" (click)="next()">Next</button>
     }

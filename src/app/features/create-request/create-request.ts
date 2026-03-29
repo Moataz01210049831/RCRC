@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { FileUpload, UploadedFile } from '../../shared/file-upload/file-upload';
+import { RequestsService } from '../../core/services/requests.service';
 
 export interface Step {
   number: number;
@@ -15,6 +16,8 @@ export interface Step {
   styleUrl: './create-request.scss',
 })
 export class CreateRequest {
+  private requestsService = inject(RequestsService);
+
   currentStep = signal(1);
 
   steps: Step[] = [
@@ -153,26 +156,57 @@ export class CreateRequest {
     }
   }
 
+  submitting = signal(false);
+
   submit() {
     if (!this.validateStep()) return;
-    this.currentStep.set(4);
-    const v = this.form.getRawValue();
-    console.log('Request Submission', {
-      customer: {
-        useSaved:     this.useSaved(),
-        customerName: v.customerName,
-        email:        v.email,
-        phone:        v.phone,
-        idType:       v.idType,
-        idNumber:     v.idNumber,
-        shortAddress: v.shortAddress,
-        city:         v.city,
-        district:     v.district,
-        postalCode:   v.postalCode,
-        requestTitle: v.requestTitle,
-        description:  v.description,
+
+    const v    = this.form.getRawValue();
+    const user = JSON.parse(localStorage.getItem('user') ?? '{}');
+
+    const model = {
+      Title:                    v.requestTitle ?? '',
+      Description:              v.description ?? '',
+      ContactId:                user.EntityId ?? '',
+      OnBehalfContactId:        '',
+      InteractionId:            '',
+      CityId:                   '',
+      ContactSourceId:          '',
+      SectorId:                 v.sector ?? '',
+      IsUrgent:                 false,
+      DivisionId:               '',
+      DivisionTypeId:           '',
+      CaseMainClassificationId: '',
+      CaseSubClassificationId:  '',
+      QuestionId:               '',
+      ComplainQuestions:        {},
+      IsSecret:                 false,
+      IsAttached:               this.uploadedFiles.length > 0,
+      DivisionName:             '',
+      mediaEmail:               v.email ?? '',
+      mediaUserName:            v.customerName ?? v.authorizedName ?? '',
+      SubServiceId:             '',
+      MedicalFile:              '',
+      MobileNumber:             v.phone ?? v.authorizedPhone ?? '',
+      service:                  v.service ?? '',
+      uomra:                    false,
+      authorityId:              '',
+      attachmentArr:            this.uploadedFiles.map(f => ({ file: f.file, dis: f.name })),
+    };
+
+    this.submitting.set(true);
+
+    this.requestsService.addRequest(model).subscribe({
+      next: (res) => {
+        this.submitting.set(false);
+        console.log('Request submitted:', res);
+        this.currentStep.set(4);
       },
-      documents: this.uploadedFiles,
+      error: (err) => {
+        this.submitting.set(false);
+        this.validationError.set('Failed to submit request. Please try again.');
+        console.error('Submit error:', err);
+      },
     });
   }
 
