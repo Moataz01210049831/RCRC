@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  apiUrl: 'https://rcrc-crm-api.2p.com.sa/api',
+  production: true,
+  apiUrl: 'https://portalrcmc.2p.com.sa/rcrc-dev/api',
 };
