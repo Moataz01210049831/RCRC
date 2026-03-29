@@ -8,5 +8,6 @@ export interface NafathUser {
   identityTypeId:  number;
   roles:           string[];
   token:           string;
+  EntityId:        string;
   beneficiaryType: 'individual' | 'legal';
 }

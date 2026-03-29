@@ -9,32 +9,6 @@ import { NafathUser } from '../models/nafath-user.model';
 
 export type { NafathUser };
 
-// ── Mock — mirrors real API shape ─────────────────────
-const MOCK_RESPONSE: LoginApiResponse = {
-  Success:    true,
-  Message:    'Login Success',
-  MetaData:   null,
-  TotalCount: 0,
-  Data: {
-    Id:        '72e99974-1029-f111-93f7-005056898a24',
-    UserName:  'agent',
-    Email:     'anas.h@2p.com.sa',
-    IsTrainee: false,
-    Roles:     ['agent'],
-    FullName:  null,
-    JWToken:   'mock-jwt-token-abc123',
-    Contact: {
-      FirstName:      'Anas',
-      LastName:       'Suleiman',
-      FullName:       'Anas Suleiman',
-      MobileNumber:   '0557334554',
-      IdentityNumber: '2044700181',
-      IdentityTypeId: 2,
-      Email:          'anas.h@2p.com.sa',
-      JobTitle:       'Senior CRM Developer',
-    },
-  },
-};
 // ─────────────────────────────────────────────────────
 
 @Injectable({ providedIn: 'root' })
@@ -50,9 +24,7 @@ export class NafathService {
   loginWithNafath(userName = 'Agent', password = 'Aa@12345') {
     this.loading.set(true);
 
-    const request$ = this.useMock
-      ? of(MOCK_RESPONSE).pipe(delay(800))
-      : this.http.post<LoginApiResponse>(
+    const request$ = this.http.post<LoginApiResponse>(
           `${this.baseUrl}/Accounts/Login`,
           { UserName: userName, Password: password },
         );
@@ -84,6 +56,7 @@ export class NafathService {
       phone:           d.Contact.MobileNumber,
       nationalId:      d.Contact.IdentityNumber,
       identityTypeId:  d.Contact.IdentityTypeId,
+      EntityId:        d.Contact.EntityId,
       roles:           d.Roles,
       token:           d.JWToken,
       beneficiaryType: 'individual', // update when API returns this field

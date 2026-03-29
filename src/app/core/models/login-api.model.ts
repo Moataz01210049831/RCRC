@@ -24,6 +24,7 @@ export interface LoginApiContact {
   MobileNumber:   string;
   IdentityNumber: string;
   IdentityTypeId: number;
+  EntityId:      string;
   Email:          string;
   JobTitle:       string | null;
 }
