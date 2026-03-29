@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { FileUpload, UploadedFile } from '../../shared/file-upload/file-upload';
 
@@ -10,7 +10,7 @@ export interface Step {
 
 @Component({
   selector: 'app-create-request',
-  imports: [FormsModule, RouterLink, FileUpload],
+  imports: [ReactiveFormsModule, RouterLink, FileUpload],
   templateUrl: './create-request.html',
   styleUrl: './create-request.scss',
 })
@@ -24,7 +24,7 @@ export class CreateRequest {
     { number: 4, label: 'Summary' },
   ];
 
-  useSaved = signal<boolean | null>(false);
+  useSaved = signal<boolean>(false);
 
   private readonly savedProfile = {
     customerName: 'Alanood Abdullah',
@@ -42,98 +42,96 @@ export class CreateRequest {
     return parsed.beneficiaryType === 'legal' ? 'legal' : 'individual';
   })();
 
-// Individual fields
-  customerName = '';
-  email = '';
-  phone = '';
-  idType = '';
-  idNumber = '';
+  form = new FormGroup({
+    // Individual fields
+    customerName:    new FormControl('', Validators.required),
+    email:           new FormControl('', Validators.required),
+    phone:           new FormControl('', Validators.required),
+    idType:          new FormControl('', Validators.required),
+    idNumber:        new FormControl('', Validators.required),
+    // Legal Entity fields
+    companyName:     new FormControl('', Validators.required),
+    crNumber:        new FormControl('', Validators.required),
+    vatNumber:       new FormControl(''),
+    authorizedName:  new FormControl('', Validators.required),
+    authorizedPhone: new FormControl('', Validators.required),
+    // Address fields
+    shortAddress:    new FormControl('', Validators.required),
+    city:            new FormControl('', Validators.required),
+    district:        new FormControl('', Validators.required),
+    postalCode:      new FormControl('', Validators.required),
+    // Request details
+    category:        new FormControl('Suggestions', Validators.required),
+    sector:          new FormControl('', Validators.required),
+    department:      new FormControl('', Validators.required),
+    service:         new FormControl('', Validators.required),
+    requestTitle:    new FormControl('', Validators.required),
+    description:     new FormControl('', Validators.required),
+  });
 
-  // Legal Entity fields
-  companyName = '';
-  crNumber = '';
-  vatNumber = '';
-  authorizedName = '';
-  authorizedPhone = '';
-
-  // Address fields
-  shortAddress = '';
-  city = '';
-  district = '';
-  postalCode = '';
   addressVerified = false;
-
-  verifyAddress() {
-    if (!this.shortAddress.trim()) return;
-    // TODO: connect to SPL API
-    console.log('Verify address:', this.shortAddress);
-    this.city        = 'Riyadh';
-    this.district    = 'Al-Malaz';
-    this.postalCode  = '12345';
-    this.addressVerified = true;
-  }
+  uploadedFiles: UploadedFile[] = [];
+  validationError = signal('');
 
   onUseSavedChange() {
     if (this.useSaved()) {
-      this.customerName = this.savedProfile.customerName;
-      this.email        = this.savedProfile.email;
-      this.phone        = this.savedProfile.phone;
-      this.idType       = this.savedProfile.idType;
-      this.idNumber     = this.savedProfile.idNumber;
+      this.form.patchValue({
+        customerName: this.savedProfile.customerName,
+        email:        this.savedProfile.email,
+        phone:        this.savedProfile.phone,
+        idType:       this.savedProfile.idType,
+        idNumber:     this.savedProfile.idNumber,
+      });
     } else {
-      this.customerName = '';
-      this.email        = '';
-      this.phone        = '';
-      this.idType       = '';
-      this.idNumber     = '';
+      this.form.patchValue({ customerName: '', email: '', phone: '', idType: '', idNumber: '' });
     }
   }
 
-  // Request details fields
-  category = 'Suggestions';
-  sector = '';
-  department = '';
-  service = '';
-  requestTitle = '';
-  description = '';
-
-  // Documents
-  uploadedFiles: UploadedFile[] = [];
-
-  validationError = signal('');
+  verifyAddress() {
+    const shortAddress = this.form.get('shortAddress')?.value;
+    if (!shortAddress?.trim()) return;
+    // TODO: connect to SPL API
+    console.log('Verify address:', shortAddress);
+    this.form.patchValue({ city: 'Riyadh', district: 'Al-Malaz', postalCode: '12345' });
+    this.form.get('city')?.disable();
+    this.form.get('district')?.disable();
+    this.form.get('postalCode')?.disable();
+    this.addressVerified = true;
+  }
 
   private validateStep(): boolean {
     this.validationError.set('');
+    const v = this.form.getRawValue();
 
     if (this.currentStep() === 1) {
       if (this.beneficiaryType === 'individual') {
-        if (!this.customerName.trim()) return this.fail('Full Name is required.');
-        if (!this.email.trim())        return this.fail('Email is required.');
-        if (!this.phone.trim())        return this.fail('Phone is required.');
-        if (!this.idType)              return this.fail('ID Type is required.');
-        if (!this.idNumber.trim())     return this.fail('ID Number is required.');
+        if (!v.customerName?.trim())  return this.fail('Full Name is required.');
+        if (!v.email?.trim())         return this.fail('Email is required.');
+        if (!v.phone?.trim())         return this.fail('Phone is required.');
+        if (!v.idType)                return this.fail('ID Type is required.');
+        if (!v.idNumber?.trim())      return this.fail('ID Number is required.');
       } else {
-        if (!this.companyName.trim())    return this.fail('Company Name is required.');
-        if (!this.crNumber.trim())       return this.fail('CR Number is required.');
-        if (!this.authorizedName.trim()) return this.fail('Authorized Person Name is required.');
-        if (!this.authorizedPhone.trim())return this.fail('Authorized Person Phone is required.');
-        if (!this.email.trim())          return this.fail('Email is required.');
+        if (!v.companyName?.trim())    return this.fail('Company Name is required.');
+        if (!v.crNumber?.trim())       return this.fail('CR Number is required.');
+        if (!v.authorizedName?.trim()) return this.fail('Authorized Person Name is required.');
+        if (!v.authorizedPhone?.trim()) return this.fail('Authorized Person Phone is required.');
+        if (!v.email?.trim())           return this.fail('Email is required.');
       }
-      if (!this.shortAddress.trim()) return this.fail('Short Address is required.');
-      if (!this.city.trim())         return this.fail('City is required.');
-      if (!this.district.trim())     return this.fail('District is required.');
-      if (!this.postalCode.trim())   return this.fail('Postal Code is required.');
+      if (!v.shortAddress?.trim()) return this.fail('Short Address is required.');
+      if (!v.city?.trim())         return this.fail('City is required.');
+      if (!v.district?.trim())     return this.fail('District is required.');
+      if (!v.postalCode?.trim())   return this.fail('Postal Code is required.');
     }
 
     if (this.currentStep() === 2) {
       if (this.beneficiaryType === 'legal') {
-        if (!this.category)        return this.fail('Category is required.');
-        if (!this.sector)          return this.fail('Sector is required.');
-        if (!this.department)      return this.fail('Department is required.');
-        if (!this.service)         return this.fail('Service is required.');
+        if (!v.category)   return this.fail('Category is required.');
+        if (!v.sector)     return this.fail('Sector is required.');
+        if (!v.department) return this.fail('Department is required.');
+        if (!v.service)    return this.fail('Service is required.');
       }
-      if (!this.requestTitle.trim()) return this.fail('Request Title is required.');
-      if (!this.description.trim())  return this.fail('Description is required.');
+      if (!v.requestTitle?.trim()) return this.fail('Request Title is required.');
+      if (!v.description?.trim())  return this.fail('Description is required.');
     }
 
     if (this.currentStep() === 3) {
@@ -158,20 +156,21 @@ export class CreateRequest {
   submit() {
     if (!this.validateStep()) return;
     this.currentStep.set(4);
+    const v = this.form.getRawValue();
     console.log('Request Submission', {
       customer: {
         useSaved:     this.useSaved(),
-        customerName: this.customerName,
-        email:        this.email,
-        phone:        this.phone,
-        idType:       this.idType,
-        idNumber:     this.idNumber,
-          shortAddress: this.shortAddress,
-          city:         this.city,
-          district:     this.district,
-          postalCode:   this.postalCode,
-        requestTitle: this.requestTitle,
-        description:  this.description,
+        customerName: v.customerName,
+        email:        v.email,
+        phone:        v.phone,
+        idType:       v.idType,
+        idNumber:     v.idNumber,
+        shortAddress: v.shortAddress,
+        city:         v.city,
+        district:     v.district,
+        postalCode:   v.postalCode,
+        requestTitle: v.requestTitle,
+        description:  v.description,
       },
       documents: this.uploadedFiles,
     });
@@ -186,9 +185,11 @@ export class CreateRequest {
   resetForm() {
     this.currentStep.set(1);
     this.useSaved.set(false);
-    this.customerName = ''; this.email = ''; this.phone = ''; this.idType = ''; this.idNumber = '';
-    this.category = 'Suggestions'; this.sector = ''; this.department = ''; this.service = '';
-    this.requestTitle = ''; this.description = '';
+    this.addressVerified = false;
+    this.form.get('city')?.enable();
+    this.form.get('district')?.enable();
+    this.form.get('postalCode')?.enable();
+    this.form.reset({ category: 'Suggestions' });
     this.uploadedFiles = [];
   }
 }

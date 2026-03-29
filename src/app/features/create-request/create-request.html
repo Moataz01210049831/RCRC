@@ -25,7 +25,7 @@
     </aside>
 
     <!-- Step Content -->
-    <div class="cr__content">
+    <div class="cr__content" [formGroup]="form">
 
       <!-- Step 1: Customer Details -->
       @if (currentStep() === 1) {
@@ -36,7 +36,8 @@
           <p class="cr__section-sub">Would you like to use your saved personal details, or enter new details?</p>
 
           <label class="cr__saved-card" [class.cr__saved-card--selected]="useSaved()">
-            <input type="radio" name="profileChoice" [value]="true" [(ngModel)]="useSaved" class="cr__radio" (ngModelChange)="onUseSavedChange()" />
+            <input type="radio" name="profileChoice" [value]="true" [checked]="useSaved()"
+                   (change)="useSaved.set(true); onUseSavedChange()" class="cr__radio" />
             <div class="cr__saved-info">
               <p class="cr__saved-name">Alanood Abdullah</p>
               <p class="cr__saved-detail">Email&#64;email.com</p>
@@ -49,19 +50,19 @@
 
           <div class="cr__field">
             <label class="cr__label">Full Name</label>
-            <input class="cr__input" type="text" placeholder="Enter full name" [(ngModel)]="customerName" name="customerName" />
+            <input class="cr__input" type="text" placeholder="Enter full name" formControlName="customerName" />
           </div>
 
           <div class="cr__row">
             <div class="cr__field">
               <label class="cr__label">Email</label>
-              <input class="cr__input" type="email" placeholder="customer@example.com" [(ngModel)]="email" name="email" />
+              <input class="cr__input" type="email" placeholder="customer@example.com" formControlName="email" />
             </div>
             <div class="cr__field cr__field--phone">
               <label class="cr__label">Phone</label>
               <div class="cr__phone-group">
                 <span class="cr__phone-prefix">+966</span>
-                <input class="cr__input cr__input--phone" type="tel" placeholder="50 123 4567" [(ngModel)]="phone" name="phone" />
+                <input class="cr__input cr__input--phone" type="tel" placeholder="50 123 4567" formControlName="phone" />
               </div>
             </div>
           </div>
@@ -69,7 +70,7 @@
           <div class="cr__row">
             <div class="cr__field">
               <label class="cr__label">ID Type</label>
-              <select class="cr__input cr__select" [(ngModel)]="idType" name="idType">
+              <select class="cr__input cr__select" formControlName="idType">
                 <option value="">Select</option>
                 <option value="national">National ID</option>
                 <option value="passport">Passport</option>
@@ -78,7 +79,7 @@
             </div>
             <div class="cr__field">
               <label class="cr__label">ID Number</label>
-              <input class="cr__input" type="text" placeholder="1234567890" [(ngModel)]="idNumber" name="idNumber" />
+              <input class="cr__input" type="text" placeholder="1234567890" formControlName="idNumber" />
             </div>
           </div>
         }
@@ -87,23 +88,23 @@
         @if (beneficiaryType === 'legal') {
           <div class="cr__field">
             <label class="cr__label">Company Name</label>
-            <input class="cr__input" type="text" placeholder="Enter company name" [(ngModel)]="companyName" name="companyName" />
+            <input class="cr__input" type="text" placeholder="Enter company name" formControlName="companyName" />
           </div>
 
           <div class="cr__row">
             <div class="cr__field">
               <label class="cr__label">CR Number</label>
-              <input class="cr__input" type="text" placeholder="e.g. 1010123456" [(ngModel)]="crNumber" name="crNumber" />
+              <input class="cr__input" type="text" placeholder="e.g. 1010123456" formControlName="crNumber" />
             </div>
             <div class="cr__field">
               <label class="cr__label cr__label--no-required">VAT Number <span class="cr__optional">(Optional)</span></label>
-              <input class="cr__input" type="text" placeholder="e.g. 300012345600003" [(ngModel)]="vatNumber" name="vatNumber" />
+              <input class="cr__input" type="text" placeholder="e.g. 300012345600003" formControlName="vatNumber" />
             </div>
           </div>
 
           <div class="cr__field">
             <label class="cr__label">Authorized Person Name</label>
-            <input class="cr__input" type="text" placeholder="Enter authorized person name" [(ngModel)]="authorizedName" name="authorizedName" />
+            <input class="cr__input" type="text" placeholder="Enter authorized person name" formControlName="authorizedName" />
           </div>
 
           <div class="cr__row">
@@ -111,12 +112,12 @@
               <label class="cr__label">Authorized Person Phone</label>
               <div class="cr__phone-group">
                 <span class="cr__phone-prefix">+966</span>
-                <input class="cr__input cr__input--phone" type="tel" placeholder="50 123 4567" [(ngModel)]="authorizedPhone" name="authorizedPhone" />
+                <input class="cr__input cr__input--phone" type="tel" placeholder="50 123 4567" formControlName="authorizedPhone" />
               </div>
             </div>
             <div class="cr__field">
               <label class="cr__label">Email</label>
-              <input class="cr__input" type="email" placeholder="company@example.com" [(ngModel)]="email" name="legalEmail" />
+              <input class="cr__input" type="email" placeholder="company@example.com" formControlName="email" />
             </div>
           </div>
         }
@@ -132,8 +133,7 @@
                 class="cr__input"
                 type="text"
                 placeholder="e.g. RRMD2929"
-                [(ngModel)]="shortAddress"
-                name="shortAddress"
+                formControlName="shortAddress"
                 [class.cr__input--verified]="addressVerified"
               />
               <!-- <button class="cr__address-verify" type="button" (click)="verifyAddress()">
@@ -144,18 +144,18 @@
           </div>
           <div class="cr__field">
             <label class="cr__label">City</label>
-            <input class="cr__input" type="text" placeholder="e.g. Riyadh" [(ngModel)]="city" name="city" [disabled]="addressVerified" />
+            <input class="cr__input" type="text" placeholder="e.g. Riyadh" formControlName="city" />
           </div>
         </div>
 
         <div class="cr__row">
           <div class="cr__field">
             <label class="cr__label">District</label>
-            <input class="cr__input" type="text" placeholder="e.g. Al-Malaz" [(ngModel)]="district" name="district" [disabled]="addressVerified" />
+            <input class="cr__input" type="text" placeholder="e.g. Al-Malaz" formControlName="district" />
           </div>
           <div class="cr__field">
             <label class="cr__label">Postal Code</label>
-            <input class="cr__input" type="text" placeholder="e.g. 12345" [(ngModel)]="postalCode" name="postalCode" [disabled]="addressVerified" />
+            <input class="cr__input" type="text" placeholder="e.g. 12345" formControlName="postalCode" />
           </div>
         </div>
       }
@@ -168,7 +168,7 @@
           <div class="cr__row">
             <div class="cr__field">
               <label class="cr__label">Category</label>
-              <select class="cr__input cr__select" [(ngModel)]="category" name="category">
+              <select class="cr__input cr__select" formControlName="category">
                 <option value="Suggestions">Suggestions</option>
                 <option value="Complaints">Complaints</option>
                 <option value="Inquiries">Inquiries</option>
@@ -177,7 +177,7 @@
             </div>
             <div class="cr__field">
               <label class="cr__label">Sector</label>
-              <select class="cr__input cr__select" [(ngModel)]="sector" name="sector">
+              <select class="cr__input cr__select" formControlName="sector">
                 <option value="">Select</option>
                 <option value="Public">Public</option>
                 <option value="Private">Private</option>
@@ -189,7 +189,7 @@
           <div class="cr__row">
             <div class="cr__field">
               <label class="cr__label">Department</label>
-              <select class="cr__input cr__select" [(ngModel)]="department" name="department">
+              <select class="cr__input cr__select" formControlName="department">
                 <option value="">Select</option>
                 <option value="IT">IT</option>
                 <option value="HR">HR</option>
@@ -199,7 +199,7 @@
             </div>
             <div class="cr__field">
               <label class="cr__label">Service</label>
-              <select class="cr__input cr__select" [(ngModel)]="service" name="service">
+              <select class="cr__input cr__select" formControlName="service">
                 <option value="">Select</option>
                 <option value="Support">Support</option>
                 <option value="Maintenance">Maintenance</option>
@@ -211,12 +211,12 @@
 
         <div class="cr__field">
           <label class="cr__label">Request Title</label>
-          <input class="cr__input" type="text" placeholder="Hint" [(ngModel)]="requestTitle" name="requestTitle" />
+          <input class="cr__input" type="text" placeholder="Hint" formControlName="requestTitle" />
         </div>
 
         <div class="cr__field">
           <label class="cr__label">Description</label>
-          <textarea class="cr__input cr__textarea" placeholder="A description for the request.." [(ngModel)]="description" name="description"></textarea>
+          <textarea class="cr__input cr__textarea" placeholder="A description for the request.." formControlName="description"></textarea>
         </div>
       }
 
@@ -236,7 +236,7 @@
             Your request is under review. The review process will take <br/> 1-2 working days.
           </p>
           <p class="cr__summary-email">
-            We sent you an email to <strong>'{{ email }}'</strong> with all the details.
+            We sent you an email to <strong>'{{ form.get('email')?.value }}'</strong> with all the details.
           </p>
 
           <div class="cr__summary-table">
@@ -246,11 +246,11 @@
             </div>
             <div class="cr__summary-row">
               <span class="cr__summary-key">Request Type</span>
-              <span class="cr__summary-val">{{ category }}</span>
+              <span class="cr__summary-val">{{ form.get('category')?.value }}</span>
             </div>
             <div class="cr__summary-row">
               <span class="cr__summary-key">Customer Name</span>
-              <span class="cr__summary-val">{{ customerName }}</span>
+              <span class="cr__summary-val">{{ form.get('customerName')?.value }}</span>
             </div>
           </div>
 
