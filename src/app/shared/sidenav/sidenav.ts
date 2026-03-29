@@ -1,5 +1,6 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Auth } from '../../core/auth';
 
 @Component({
   selector: 'app-sidenav',
@@ -8,6 +9,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './sidenav.scss',
 })
 export class Sidenav {
+  private auth = inject(Auth);
+
   isOpen = input<boolean>(true);
   toggleNav = output<void>();
   contactExpanded = signal(true);
@@ -16,6 +19,7 @@ export class Sidenav {
 
   setLang(l: 'EN' | 'AR') { this.lang.set(l); this.langOpen.set(false); }
   toggleLang() { this.langOpen.update(v => !v); }
+  logout() { this.auth.logout(); }
 
   navItems = [
     { label: 'Dashboard', icon: 'dashboard', route: '/dashboard' },

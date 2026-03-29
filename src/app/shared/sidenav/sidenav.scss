@@ -290,6 +290,26 @@ $nav-collapsed-width: 64px;
     }
   }
 
+  &__logout {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    color: #e53935;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    .material-icons { font-size: 20px; flex-shrink: 0; }
+    &:hover { background: #fdecea; }
+  }
+
+  &__logout-label { white-space: nowrap; }
+
   &__footer {
     padding: 16px 20px;
     border-top: 1px solid #cfcbcb;

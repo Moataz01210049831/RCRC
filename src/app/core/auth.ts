@@ -1,19 +1,16 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class Auth {
-  private _isLoggedIn = signal(false);
+  private _isLoggedIn = signal(!!localStorage.getItem('token'));
 
   isLoggedIn = this._isLoggedIn.asReadonly();
 
   constructor(private router: Router) {}
 
-  login(username: string, password: string): boolean {
-    // Replace with real API call
-    if (username && password) {
+  login(username: string, token: string): boolean {
+    if (username && token) {
       this._isLoggedIn.set(true);
       return true;
     }
@@ -22,6 +19,8 @@ export class Auth {
 
   logout() {
     this._isLoggedIn.set(false);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.router.navigate(['/login']);
   }
 }

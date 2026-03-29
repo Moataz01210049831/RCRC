@@ -98,6 +98,12 @@
     }
   </div>
 
+  <!-- Logout -->
+  <button class="sidenav__logout" type="button" (click)="logout()">
+    <span class="material-icons">logout</span>
+    @if (isOpen()) { <span class="sidenav__logout-label">Logout</span> }
+  </button>
+
   <!-- Footer -->
   <div class="sidenav__footer">
     @if (isOpen()) {
