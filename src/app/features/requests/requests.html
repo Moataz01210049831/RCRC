@@ -48,7 +48,11 @@
       }
 
       @if (activeExpanded()) {
-        <app-data-table [columns]="columns" [data]="activeRequests" />
+        @if (activeRequests.length === 0) {
+          <app-empty-state title="No Active Requests" message="You have no active requests at the moment." />
+        } @else {
+          <app-data-table [columns]="columns" [data]="activeRequests" />
+        }
       }
     </div>
   }
@@ -70,7 +74,11 @@
       }
 
       @if (closedExpanded()) {
-        <app-data-table [columns]="columns" [data]="closedRequests" />
+        @if (closedRequests.length === 0) {
+          <app-empty-state title="No Closed Requests" message="You have no closed requests at the moment." />
+        } @else {
+          <app-data-table [columns]="columns" [data]="closedRequests" />
+        }
       }
     </div>
   }

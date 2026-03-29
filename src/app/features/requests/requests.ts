@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DataTable, TableColumn, TableRow } from '../../shared/data-table/data-table';
+import { EmptyState } from '../../shared/empty-state/empty-state';
 import { RequestsService } from '../../core/services/requests.service';
 import { RequestItem } from '../../core/models/request.model';
 
@@ -8,7 +9,7 @@ type Tab = 'Main table' | 'Active Requests' | 'Closed';
 
 @Component({
   selector: 'app-requests',
-  imports: [FormsModule, DataTable],
+  imports: [FormsModule, DataTable, EmptyState],
   templateUrl: './requests.html',
   styleUrl: './requests.scss',
 })

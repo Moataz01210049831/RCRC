@@ -1,0 +1,28 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+
+  &__icon {
+    font-size: 56px;
+    color: var(--color-border-mid);
+    margin-bottom: 16px;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 8px;
+  }
+
+  &__message {
+    font-size: 13px;
+    color: var(--color-text-subtle);
+    margin: 0;
+    max-width: 280px;
+  }
+}
