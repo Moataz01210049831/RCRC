@@ -498,6 +498,22 @@
     .material-icons { font-size: 18px; }
   }
 
+  // ── Validation Error ──────────────────────────────────
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #fff3f3;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    color: #c0392b;
+    font-size: 13px;
+    margin-bottom: 8px;
+
+    .material-icons { font-size: 18px; flex-shrink: 0; }
+  }
+
   // ── Footer ───────────────────────────────────────────
   &__footer {
     display: flex;

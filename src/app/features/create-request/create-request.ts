@@ -100,13 +100,63 @@ export class CreateRequest {
   // Documents
   uploadedFiles: UploadedFile[] = [];
 
+  validationError = signal('');
+
+  private validateStep(): boolean {
+    this.validationError.set('');
+
+    if (this.currentStep() === 1) {
+      if (this.beneficiaryType === 'individual') {
+        if (!this.customerName.trim()) return this.fail('Full Name is required.');
+        if (!this.email.trim())        return this.fail('Email is required.');
+        if (!this.phone.trim())        return this.fail('Phone is required.');
+        if (!this.idType)              return this.fail('ID Type is required.');
+        if (!this.idNumber.trim())     return this.fail('ID Number is required.');
+      } else {
+        if (!this.companyName.trim())    return this.fail('Company Name is required.');
+        if (!this.crNumber.trim())       return this.fail('CR Number is required.');
+        if (!this.authorizedName.trim()) return this.fail('Authorized Person Name is required.');
+        if (!this.authorizedPhone.trim())return this.fail('Authorized Person Phone is required.');
+        if (!this.email.trim())          return this.fail('Email is required.');
+      }
+      if (!this.shortAddress.trim()) return this.fail('Short Address is required.');
+      if (!this.city.trim())         return this.fail('City is required.');
+      if (!this.district.trim())     return this.fail('District is required.');
+      if (!this.postalCode.trim())   return this.fail('Postal Code is required.');
+    }
+
+    if (this.currentStep() === 2) {
+      if (this.beneficiaryType === 'legal') {
+        if (!this.category)        return this.fail('Category is required.');
+        if (!this.sector)          return this.fail('Sector is required.');
+        if (!this.department)      return this.fail('Department is required.');
+        if (!this.service)         return this.fail('Service is required.');
+      }
+      if (!this.requestTitle.trim()) return this.fail('Request Title is required.');
+      if (!this.description.trim())  return this.fail('Description is required.');
+    }
+
+    if (this.currentStep() === 3) {
+      if (this.uploadedFiles.length === 0) return this.fail('At least one document is required.');
+    }
+
+    return true;
+  }
+
+  private fail(msg: string): boolean {
+    this.validationError.set(msg);
+    return false;
+  }
+
   next() {
+    if (!this.validateStep()) return;
     if (this.currentStep() < this.steps.length) {
       this.currentStep.set(this.currentStep() + 1);
     }
   }
 
   submit() {
+    if (!this.validateStep()) return;
     this.currentStep.set(4);
     console.log('Request Submission', {
       customer: {
