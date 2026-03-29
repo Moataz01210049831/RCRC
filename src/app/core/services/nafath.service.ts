@@ -4,55 +4,25 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { throwError, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { LoginApiResponse } from '../models/login-api.model';
+import { NafathUser } from '../models/nafath-user.model';
 
-// ── API response shape ────────────────────────────────
-interface LoginApiResponse {
-  Success: boolean;
-  Message: string;
-  Data: {
-    Id:         string;
-    UserName:   string;
-    Email:      string;
-    Roles:      string[];
-    JWToken:    string;
-    Contact: {
-      FirstName:      string;
-      LastName:       string;
-      FullName:       string;
-      MobileNumber:   string;
-      IdentityNumber: string;
-      IdentityTypeId: number;
-      Email:          string;
-      EntityId:       string;
-    };
-  };
-}
-
-// ── Normalised user stored in app ─────────────────────
-export interface NafathUser {
-  id:              string;
-  userName:        string;
-  name:            string;
-  email:           string;
-  phone:           string;
-  nationalId:      string;
-  identityTypeId:  number;
-  EntityId:        string;
-  roles:           string[];
-  token:           string;
-  beneficiaryType: 'individual' | 'legal';
-}
+export type { NafathUser };
 
 // ── Mock — mirrors real API shape ─────────────────────
 const MOCK_RESPONSE: LoginApiResponse = {
-  Success: true,
-  Message: 'Login Success',
+  Success:    true,
+  Message:    'Login Success',
+  MetaData:   null,
+  TotalCount: 0,
   Data: {
-    Id:       '72e99974-1029-f111-93f7-005056898a24',
-    UserName: 'agent',
-    Email:    'anas.h@2p.com.sa',
-    Roles:    ['agent'],
-    JWToken:  'mock-jwt-token-abc123',
+    Id:        '72e99974-1029-f111-93f7-005056898a24',
+    UserName:  'agent',
+    Email:     'anas.h@2p.com.sa',
+    IsTrainee: false,
+    Roles:     ['agent'],
+    FullName:  null,
+    JWToken:   'mock-jwt-token-abc123',
     Contact: {
       FirstName:      'Anas',
       LastName:       'Suleiman',
@@ -61,7 +31,7 @@ const MOCK_RESPONSE: LoginApiResponse = {
       IdentityNumber: '2044700181',
       IdentityTypeId: 2,
       Email:          'anas.h@2p.com.sa',
-      EntityId:       'entity-id-123',
+      JobTitle:       'Senior CRM Developer',
     },
   },
 };
@@ -109,15 +79,14 @@ export class NafathService {
     return {
       id:              d.Id,
       userName:        d.UserName,
-      name:            d.Contact.FullName  || `${d.Contact.FirstName} ${d.Contact.LastName}`,
-      email:           d.Contact.Email     || d.Email,
+      name:            d.Contact.FullName || `${d.Contact.FirstName} ${d.Contact.LastName}`,
+      email:           d.Contact.Email   || d.Email,
       phone:           d.Contact.MobileNumber,
       nationalId:      d.Contact.IdentityNumber,
       identityTypeId:  d.Contact.IdentityTypeId,
       roles:           d.Roles,
       token:           d.JWToken,
-      EntityId:         d.Contact.EntityId,
-      beneficiaryType: 'individual',   // update when API returns this field
+      beneficiaryType: 'individual', // update when API returns this field
     };
   }
 
@@ -128,7 +97,6 @@ export class NafathService {
 
   logout() {
     this.user.set(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.clear();
   }
 }
