@@ -12,25 +12,25 @@
     <img src="images/avatar.png" alt="User Avatar" class="sidenav__avatar" />
     @if (isOpen()) {
       <div class="sidenav__username-row">
-        <h3 class="sidenav__username">Abdulaziz Al-Abdullah</h3>
+        <h3 class="sidenav__username">{{ userName }}</h3>
         <button class="sidenav__contact-toggle" (click)="contactExpanded.set(!contactExpanded())" [title]="contactExpanded() ? 'Hide contact' : 'Show contact'">
           <span class="material-icons">{{ contactExpanded() ? 'expand_less' : 'expand_more' }}</span>
         </button>
       </div>
       @if (contactExpanded()) {
       <div class="sidenav__contact">
-        <a class="sidenav__contact-item" href="tel:0114234567">
-          <span class="material-icons sidenav__contact-icon">phone</span>
-          <span class="sidenav__contact-text">0114234567</span>
-        </a>
-        <a class="sidenav__contact-item" href="tel:0550000005">
-          <span class="material-icons sidenav__contact-icon">smartphone</span>
-          <span class="sidenav__contact-text">0550000005</span>
-        </a>
-        <a class="sidenav__contact-item" href="mailto:email@rcrc.gov.sa">
-          <span class="material-icons sidenav__contact-icon">mail_outline</span>
-          <span class="sidenav__contact-text">email@rcrc.gov.sa</span>
-        </a>
+        @if (userPhone) {
+          <a class="sidenav__contact-item" [href]="'tel:' + userPhone">
+            <span class="material-icons sidenav__contact-icon">smartphone</span>
+            <span class="sidenav__contact-text">{{ userPhone }}</span>
+          </a>
+        }
+        @if (userEmail) {
+          <a class="sidenav__contact-item" [href]="'mailto:' + userEmail">
+            <span class="material-icons sidenav__contact-icon">mail_outline</span>
+            <span class="sidenav__contact-text">{{ userEmail }}</span>
+          </a>
+        }
       </div>
       }
     }

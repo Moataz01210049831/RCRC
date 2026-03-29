@@ -17,6 +17,16 @@ export class Sidenav {
   lang = signal<'EN' | 'AR'>('EN');
   langOpen = signal(false);
 
+  // User from localStorage
+  private storedUser = (() => {
+    const raw = localStorage.getItem('user');
+    return raw ? JSON.parse(raw) : null;
+  })();
+
+  userName  = this.storedUser?.name  ?? 'User';
+  userPhone = this.storedUser?.phone  ?? '';
+  userEmail = this.storedUser?.email  ?? '';
+
   setLang(l: 'EN' | 'AR') { this.lang.set(l); this.langOpen.set(false); }
   toggleLang() { this.langOpen.update(v => !v); }
   logout() { this.auth.logout(); }

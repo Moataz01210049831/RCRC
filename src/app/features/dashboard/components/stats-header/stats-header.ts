@@ -16,7 +16,13 @@ interface StatCard {
   styleUrl: './stats-header.scss',
 })
 export class StatsHeader {
-  userName = 'Abdulaziz';
+  userName = (() => {
+    const raw = localStorage.getItem('user');
+    if (!raw) return 'User';
+    const u = JSON.parse(raw);
+    // Use first word of full name as greeting name
+    return (u.name as string)?.split(' ')[0] ?? 'User';
+  })();
 
   stats: StatCard[] = [
     { label: 'Active Requests', count: 2, unit: 'Request',  iconClass: 'stats-header__icon--active'  },
