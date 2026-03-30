@@ -6,7 +6,8 @@ import { Component, input } from '@angular/core';
   styleUrl: './loader.scss',
 })
 export class Loader {
-  size  = input<'sm' | 'md' | 'lg'>('md');
-  label = input<string>('Loading...');
-  overlay = input<boolean>(false);
+  size       = input<'sm' | 'md' | 'lg'>('md');
+  label      = input<string>('Loading...');
+  overlay    = input<boolean>(false);
+  fullscreen = input<boolean>(false);
 }

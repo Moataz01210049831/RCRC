@@ -1,5 +1,9 @@
 <div class="cr">
 
+  @if (submitting()) {
+    <app-loader [fullscreen]="true" size="lg" label="Submitting your request..." />
+  }
+
   <!-- Page Header -->
   <div class="cr__header">
     <a class="cr__back" routerLink="/dashboard">
@@ -282,13 +286,7 @@
       <button class="cr__btn cr__btn--secondary" (click)="back()">Back</button>
     }
     @if (currentStep() === 3) {
-      <button class="cr__btn cr__btn--primary" (click)="submit()" [disabled]="submitting()">
-        @if (submitting()) {
-          <app-loader size="sm" label="" />
-        } @else {
-          Submit
-        }
-      </button>
+      <button class="cr__btn cr__btn--primary" (click)="submit()" [disabled]="submitting()">Submit</button>
     } @else if (currentStep() < 4) {
       <button class="cr__btn cr__btn--primary" (click)="next()">Next</button>
     }
