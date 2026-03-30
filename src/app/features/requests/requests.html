@@ -31,8 +31,12 @@
     </div>
   </div>
 
+  @if (loading()) {
+    <app-loader label="Loading requests..." />
+  }
+
   <!-- Active Requests group -->
-  @if (activeTab() !== 'Closed') {
+  @if (!loading() && activeTab() !== 'Closed') {
     <div class="requests__group">
       <button class="requests__group-header" (click)="activeExpanded.set(!activeExpanded())">
         <span class="material-icons requests__chevron" [class.requests__chevron--open]="activeExpanded()">
@@ -58,7 +62,7 @@
   }
 
   <!-- Closed group -->
-  @if (activeTab() !== 'Active Requests') {
+  @if (!loading() && activeTab() !== 'Active Requests') {
     <div class="requests__group">
       <button class="requests__group-header" (click)="closedExpanded.set(!closedExpanded())">
         <span class="material-icons requests__chevron" [class.requests__chevron--open]="closedExpanded()">

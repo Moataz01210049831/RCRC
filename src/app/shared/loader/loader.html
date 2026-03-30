@@ -1,0 +1,6 @@
+<div class="loader" [class.loader--overlay]="overlay()" [class]="'loader--' + size()">
+  <div class="loader__spinner"></div>
+  @if (label()) {
+    <p class="loader__label">{{ label() }}</p>
+  }
+</div>

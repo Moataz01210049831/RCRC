@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { FileUpload, UploadedFile } from '../../shared/file-upload/file-upload';
+import { Loader } from '../../shared/loader/loader';
 import { RequestsService } from '../../core/services/requests.service';
 import { NafathUser } from '../../core/models/nafath-user.model';
 
@@ -12,7 +13,7 @@ export interface Step {
 
 @Component({
   selector: 'app-create-request',
-  imports: [ReactiveFormsModule, RouterLink, FileUpload],
+  imports: [ReactiveFormsModule, RouterLink, FileUpload, Loader],
   templateUrl: './create-request.html',
   styleUrl: './create-request.scss',
 })
