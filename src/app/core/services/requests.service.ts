@@ -49,32 +49,14 @@ export class RequestsService {
 
   addRequest(model: AddComplainRequest, caseType = 100000005) {
     const fileFormData = new FormData();
-
     const complain = {
       Title:                    model.Title,
-      InteractionId:            model.InteractionId,
+      NationalAddress:          model.NationalAddress,
       ContactId:                model.ContactId,
-      OnBehalfContactId:        model.OnBehalfContactId,
-      CityId:                   model.CityId,
-      ContactSourceId:          model.ContactSourceId,
       Description:              model.Description,
-      SectorId:                 model.SectorId,
-      IsUrgent:                 model.IsUrgent,
-      DivisionId:               model.DivisionId,
-      DivisionTypeId:           model.DivisionTypeId,
-      CaseMainClassificationId: model.CaseSubClassificationId,
-      CaseSubClassificationId:  model.CaseSubClassificationId,
-      QuestionId:               model.QuestionId,
-      ComplainQuestions:        model.ComplainQuestions,
-      IsSecret:                 model.IsSecret,
-      IsAttached:               model.IsAttached,
-      DivisionName:             model.DivisionName,
       mediaEmail:               model.mediaEmail,
       mediaUserName:            model.mediaUserName,
-      SubServiceId:             model.SubServiceId,
-      MedicalFile:              model.MedicalFile,
       MobileNumber:             model.MobileNumber,
-      ServiceId:                model.service,
     };
 
     fileFormData.append('complainViewModel', JSON.stringify(complain));

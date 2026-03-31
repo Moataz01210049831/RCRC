@@ -5,6 +5,7 @@ import { FileUpload, UploadedFile } from '../../shared/file-upload/file-upload';
 import { Loader } from '../../shared/loader/loader';
 import { RequestsService } from '../../core/services/requests.service';
 import { NafathUser } from '../../core/models/nafath-user.model';
+import { AddComplainRequest } from '../../core/models/request.model';
 
 export interface Step {
   number: number;
@@ -163,38 +164,20 @@ export class CreateRequest {
     const v    = this.form.getRawValue();
     const user = JSON.parse(localStorage.getItem('user') ?? '{}');
 
-    const model = {
+    const model:AddComplainRequest = {
       Title:                    v.requestTitle ?? '',
       Description:              v.description ?? '',
       ContactId:                user.EntityId ?? '',
-      OnBehalfContactId:        '',
-      InteractionId:            '',
-      CityId:                   '',
-      ContactSourceId:          '',
-      SectorId:                 v.sector ?? '',
-      IsUrgent:                 false,
-      DivisionId:               '',
-      DivisionTypeId:           '',
-      CaseMainClassificationId: '',
-      CaseSubClassificationId:  '',
-      QuestionId:               '',
-      ComplainQuestions:        {},
-      IsSecret:                 false,
-      IsAttached:               this.uploadedFiles.length > 0,
-      DivisionName:             '',
+      NationalAddress:          [v.shortAddress, v.city, v.district, v.postalCode].filter(Boolean).join(', '),
       mediaEmail:               v.email ?? '',
       mediaUserName:            v.customerName ?? v.authorizedName ?? '',
-      SubServiceId:             '',
-      MedicalFile:              '',
       MobileNumber:             v.phone ?? v.authorizedPhone ?? '',
-      service:                  v.service ?? '',
-      uomra:                    false,
       authorityId:              '',
       attachmentArr:            this.uploadedFiles.map(f => ({ file: f.file, dis: f.name })),
     };
 
     this.submitting.set(true);
-
+console.log('Request submitted:', model);
     this.requestsService.addRequest(model).subscribe({
       next: (res) => {
         this.submitting.set(false);
