@@ -34,14 +34,6 @@ export class CreateRequest {
 
   readonly storedUser: NafathUser = JSON.parse(localStorage.getItem('user') ?? '{}');
 
-  private readonly savedProfile = {
-    customerName: this.storedUser.name        ?? '',
-    email:        this.storedUser.email       ?? '',
-    phone:        this.storedUser.phone       ?? '',
-    idType:       this.storedUser.identityTypeId === 1 ? 'national' : 'iqama',
-    idNumber:     this.storedUser.nationalId  ?? '',
-  };
-
   // Beneficiary type — set from login API response stored in localStorage
   beneficiaryType: 'individual' | 'legal' = this.storedUser.beneficiaryType === 'legal' ? 'legal' : 'individual';
 
@@ -76,17 +68,13 @@ export class CreateRequest {
   uploadedFiles: UploadedFile[] = [];
   validationError = signal('');
 
+  private readonly individualFields = ['customerName', 'email', 'phone', 'idType', 'idNumber'] as const;
+
   onUseSavedChange() {
     if (this.useSaved()) {
-      this.form.patchValue({
-        customerName: this.savedProfile.customerName,
-        email:        this.savedProfile.email,
-        phone:        this.savedProfile.phone,
-        idType:       this.savedProfile.idType,
-        idNumber:     this.savedProfile.idNumber,
-      });
+      this.individualFields.forEach(f => this.form.get(f)?.disable());
     } else {
-      this.form.patchValue({ customerName: '', email: '', phone: '', idType: '', idNumber: '' });
+      this.individualFields.forEach(f => this.form.get(f)?.enable());
     }
   }
 
@@ -107,18 +95,20 @@ export class CreateRequest {
     const v = this.form.getRawValue();
 
     if (this.currentStep() === 1) {
-      if (this.beneficiaryType === 'individual') {
-        if (!v.customerName?.trim())  return this.fail('Full Name is required.');
-        if (!v.email?.trim())         return this.fail('Email is required.');
-        if (!v.phone?.trim())         return this.fail('Phone is required.');
-        if (!v.idType)                return this.fail('ID Type is required.');
-        if (!v.idNumber?.trim())      return this.fail('ID Number is required.');
-      } else {
-        if (!v.companyName?.trim())    return this.fail('Company Name is required.');
-        if (!v.crNumber?.trim())       return this.fail('CR Number is required.');
-        if (!v.authorizedName?.trim()) return this.fail('Authorized Person Name is required.');
-        if (!v.authorizedPhone?.trim()) return this.fail('Authorized Person Phone is required.');
-        if (!v.email?.trim())           return this.fail('Email is required.');
+      if (!this.useSaved()) {
+        if (this.beneficiaryType === 'individual') {
+          if (!v.customerName?.trim())  return this.fail('Full Name is required.');
+          if (!v.email?.trim())         return this.fail('Email is required.');
+          if (!v.phone?.trim())         return this.fail('Phone is required.');
+          if (!v.idType)                return this.fail('ID Type is required.');
+          if (!v.idNumber?.trim())      return this.fail('ID Number is required.');
+        } else {
+          if (!v.companyName?.trim())     return this.fail('Company Name is required.');
+          if (!v.crNumber?.trim())        return this.fail('CR Number is required.');
+          if (!v.authorizedName?.trim())  return this.fail('Authorized Person Name is required.');
+          if (!v.authorizedPhone?.trim()) return this.fail('Authorized Person Phone is required.');
+          if (!v.email?.trim())           return this.fail('Email is required.');
+        }
       }
       if (!v.shortAddress?.trim()) return this.fail('Short Address is required.');
       if (!v.city?.trim())         return this.fail('City is required.');
@@ -169,9 +159,11 @@ export class CreateRequest {
       Description:              v.description ?? '',
       ContactId:                user.EntityId ?? '',
       NationalAddress:          [v.shortAddress, v.city, v.district, v.postalCode].filter(Boolean).join(', '),
-      mediaEmail:               v.email ?? '',
-      mediaUserName:            v.customerName ?? v.authorizedName ?? '',
-      MobileNumber:             v.phone ?? v.authorizedPhone ?? '',
+      mediaEmail:               this.useSaved() ? this.storedUser.email           : (v.email ?? ''),
+      mediaUserName:            this.useSaved() ? this.storedUser.name            : (v.customerName ?? v.authorizedName ?? ''),
+      MobileNumber:             this.useSaved() ? this.storedUser.phone           : (v.phone ?? v.authorizedPhone ?? ''),
+      IdNumber:                 this.useSaved() ? this.storedUser.nationalId      : (v.idNumber ?? ''),
+      IdType:                   this.useSaved() ? this.storedUser.identityTypeId  : (v.idType ?? ''),
       authorityId:              '',
       attachmentArr:            this.uploadedFiles.map(f => ({ file: f.file, dis: f.name })),
     };
@@ -202,6 +194,7 @@ console.log('Request submitted:', model);
     this.currentStep.set(1);
     this.useSaved.set(false);
     this.addressVerified = false;
+    this.individualFields.forEach(f => this.form.get(f)?.enable());
     this.form.get('city')?.enable();
     this.form.get('district')?.enable();
     this.form.get('postalCode')?.enable();

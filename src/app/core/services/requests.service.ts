@@ -57,6 +57,8 @@ export class RequestsService {
       mediaEmail:               model.mediaEmail,
       mediaUserName:            model.mediaUserName,
       MobileNumber:             model.MobileNumber,
+      IdNumber:                 model.IdNumber,
+      IdType:                   model.IdType,
     };
 
     fileFormData.append('complainViewModel', JSON.stringify(complain));
