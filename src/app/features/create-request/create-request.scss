@@ -322,7 +322,35 @@
     &--selected { border-color: var(--color-primary); }
   }
 
-  &__radio { margin-top: 3px; accent-color: var(--color-primary); }
+  &__radio {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    margin-top: 3px;
+    transition: background 0.2s, border-color 0.2s;
+    position: relative;
+
+    &:checked {
+      background: var(--color-primary, #1a3c34);
+      border-color: var(--color-primary, #1a3c34);
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #fff;
+      }
+    }
+  }
 
   &__saved-name {
     font-size: 14px;

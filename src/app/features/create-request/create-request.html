@@ -40,8 +40,8 @@
           <p class="cr__section-sub">Would you like to use your saved personal details, or enter new details?</p>
 
           <label class="cr__saved-card" [class.cr__saved-card--selected]="useSaved()">
-            <input type="radio" name="profileChoice" [value]="true" [checked]="useSaved()"
-                   (change)="useSaved.set(true); onUseSavedChange()" class="cr__radio" />
+            <input type="checkbox" [checked]="useSaved()"
+                   (change)="useSaved.set(!useSaved()); onUseSavedChange()" class="cr__radio" />
             <div class="cr__saved-info">
               <p class="cr__saved-name">{{ storedUser.name }}</p>
               <p class="cr__saved-detail">{{ storedUser.email }}</p>
