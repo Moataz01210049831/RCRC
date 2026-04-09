@@ -6,8 +6,8 @@ export interface AddComplainRequest {
   mediaEmail:               string;
   mediaUserName:            string;
   MobileNumber:             string;
-  IdNumber:                 string;
-  IdType:                   string | number;
+  IdentityNumber:                 string;
+  IdentityTypeId:                   string | number;
   authorityId:              string;
   attachmentArr:            { file: File; dis: string }[];
 }

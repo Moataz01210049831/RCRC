@@ -162,8 +162,8 @@ export class CreateRequest {
       mediaEmail:               this.useSaved() ? this.storedUser.email           : (v.email ?? ''),
       mediaUserName:            this.useSaved() ? this.storedUser.name            : (v.customerName ?? v.authorizedName ?? ''),
       MobileNumber:             this.useSaved() ? this.storedUser.phone           : (v.phone ?? v.authorizedPhone ?? ''),
-      IdNumber:                 this.useSaved() ? this.storedUser.nationalId      : (v.idNumber ?? ''),
-      IdType:                   this.useSaved() ? this.storedUser.identityTypeId  : (v.idType ?? ''),
+      IdentityNumber:                 this.useSaved() ? this.storedUser.nationalId      : (v.idNumber ?? ''),
+      IdentityTypeId:                   this.useSaved() ? this.storedUser.identityTypeId  : (v.idType ?? ''),
       authorityId:              '',
       attachmentArr:            this.uploadedFiles.map(f => ({ file: f.file, dis: f.name })),
     };
