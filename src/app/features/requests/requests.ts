@@ -41,7 +41,7 @@ export class Requests implements OnInit {
       id:           item.TicketNumber || item.SerialNumber || item.Id,
       status:       item.Status?.Name ?? statusGroup,
       statusGroup,
-      type:         item.TicketType?.Name ?? '',
+      type:         String(item.TicketType?.Value) === '100000005' ? 'طلبات الاستوديو التصميمي' : (item.TicketType?.Value ?? ''),
       createdOn:    item.CreatedOn
                       ? new Date(item.CreatedOn).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
                       : '',
